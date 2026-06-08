@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Virtual - Mis Clases y Materiales</title>
+    <style>
+        /* --- ESTILOS BASE --- */
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background-color: #f0f4f8; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        header { 
+            background-color: #1a365d; 
+            color: white; 
+            padding: 15px; 
+            text-align: center; 
+        }
+        
+        main { 
+            max-width: 900px; 
+            margin: 20px auto; 
+            padding: 20px; 
+        }
+
+        /* --- APARTADOS / TARJETAS CON MOVIMIENTO --- */
+        .card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 12px; 
+            margin-bottom: 25px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        }
+        
+        .card:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 12px 20px rgba(26, 54, 93, 0.12); 
+        }
+
+        /* --- CONTENEDORES MULTIMEDIA --- */
+        .contenedor-multimedia {
+            overflow: hidden; 
+            border-radius: 8px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Altura máxima para contenedores que solo llevan imágenes */
+        .contenedor-img-fija {
+            max-height: 250px;
+        }
+
+        /* Estilo para que el video de YouTube se adapte y tenga bordes redondeados */
+        .contenedor-multimedia iframe {
+            display: block;
+            border: none;
+            border-radius: 8px;
+        }
+
+        /* Efecto de zoom para las imágenes del panel */
+        .animacion-efecto { 
+            width: 100%; 
+            height: auto; 
+            display: block;
+            transition: transform 0.5s ease; 
+        }
+        
+        .animacion-efecto:hover {
+            transform: scale(1.04); 
+        }
+        
+        /* --- GRUPO DE BOTONES ALINEADOS --- */
+        .grupo-botones {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .btn-enlace { 
+            display: inline-block; 
+            color: white; 
+            padding: 12px 22px; 
+            text-decoration: none; 
+            border-radius: 6px; 
+            font-weight: bold; 
+            transition: all 0.2s ease;
+        }
+        
+        .btn-enlace:hover { 
+            transform: scale(1.02); 
+            opacity: 0.9;
+        }
+        
+        /* Colores de los botones del portal */
+        .btn-azul { background-color: #3182ce; }
+        .btn-gris { background-color: #4a5568; }
+        .btn-pdf { background-color: #e53e3e; }
+        .btn-word { background-color: #2b6cb0; } /* Azul suave para Word */
+        .btn-vivo { background-color: #38a169; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Aula Virtual del Alumno</h1>
+        <p>Bienvenido a tu espacio de estudio</p>
+    </header>
+
+    <main>
+        
+        <section class="card">
+            <h2>Material Visual de la Clase</h2>
+            <p>Reproduce el video explicativo de la lección antes de realizar tus actividades:</p>
+            
+            <div class="contenedor-multimedia" style="display: flex; flex-direction: column; gap: 25px; background: none; padding: 0;">
+                
+                <!-- SECCIÓN 1: REPRODUCTOR PARA EL VIDEO MP4 LOCAL -->
+                <div style="background-color: #e2e2e2; padding: 20px; border-radius: 8px; text-align: center;">
+                    <p style="margin-top: 0; margin-bottom: 15px; font-weight: bold; color: #4b2e83; text-align: left;">
+                        🎥 Opción 1: Reproducir video local (MP4)
+                    </p>
+                    <!-- REPRODUCTOR NATIVO: Cambia "video_explicativo.mp4" por el nombre exacto de tu archivo -->
+                    <video controls style="width: 100%; max-width: 700px; height: auto; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); outline: none;">
+                        <source src="video prueva.mp4" type="video/mp4">
+                        Tu navegador no soporta la reproducción de videos locales.
+                    </video>
+                </div>
+
+                <!-- SECCIÓN 2: BOTÓN DE REDIRECCIÓN A YOUTUBE -->
+                <div style="background-color: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: center;">
+                    <p style="margin-top: 0; margin-bottom: 15px; font-weight: bold; color: #4b2e83; text-align: left;">
+                        🌐 Opción 2: Ver la lección externa
+                    </p>
+                    <!-- BOTÓN PERSONALIZADO: Cambia la URL por el enlace normal de tu video de YouTube -->
+                    <a href="https://youtu.be/X11KScXu9pg?si=8LPz9BgOQLacrLbf" target="_blank" class="btn-enlace" style="background-color: #ff0000; color: white; display: inline-block; padding: 12px 30px; text-decoration: none; font-weight: bold; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                        📺 Abrir video en YouTube
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section class="card">
+            <h2>Páginas Web y Fuentes de Consulta</h2>
+            <p>Utiliza los siguientes enlaces recomendados para investigar y expandir los temas vistos hoy:</p>
+       
+            <div class="contenedor-multimedia contenedor-img-fija">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800" alt="Investigación en internet" class="animacion-efecto">
+            </div>
+
+            <div class="grupo-botones">
+                <a href="http://scholar.google.es" target="_blank" class="btn-enlace btn-azul">
+                    🌐 Consultar Enciclopedia Virtual
+                </a>
+
+                <a href="http://aprende.org" target="_blank" class="btn-enlace btn-gris">
+                    🧪 Abrir Laboratorio Virtual Interactivo
+                </a>
+            </div>
+        </section>
+
+
+        <section class="card">
+            <h2>Archivos y Guías de Estudio</h2>
+            <p>Descarga el material didáctico directamente en tu dispositivo para trabajar sin conexión:</p>
+            
+            <div class="contenedor-multimedia contenedor-img-fija">
+                <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800" alt="Libros escolares" class="animacion-efecto">
+            </div>
+            
+            <div class="grupo-botones">
+                <a href="documentos/EJEMPLO_GUIA.pdf" download="Guia_De_Estudio_2026.pdf" class="btn-enlace btn-pdf">
+                    📄 Descargar Guía de Estudio (PDF)
+                </a>
+
+                <a href="documentos/EJEMPLO_TAREA.docx" download="Formato_Tarea.docx" class="btn-enlace btn-word">
+                    📝 Descargar Formato de Tarea (Word)
+                </a>
+            </div>
+        </section>
+
+
+        <section class="card">
+            <h2>Clase en Vivo (Videoconferencia)</h2>
+            <p>Accede de forma directa a la sesión virtual programada con tu profesor mediante el siguiente enlace:</p>
+            
+            <div class="grupo-botones">
+                <a href="https://meet.google.com/abc-defg-hij" target="_blank" class="btn-enlace btn-vivo">
+                    🔴 Unirse a la Clase en Google Meet
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+<style>html{
+ color:darkviolet;
+ font-size:25px;
+ font-weight:600;
+}
+</style><script>/*Here write your javascript code*/</script></html>

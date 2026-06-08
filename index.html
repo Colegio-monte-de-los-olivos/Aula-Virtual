@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Escolar - Acceso y Registro de Alumnos</title>
+    
+    <style>
+        /* --- ESTILOS GENERALES --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8; 
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- ENCABEZADO --- */
+        header {
+            background-color: #1a365d; 
+            color: white;
+            text-align: center;
+            padding: 20px 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin: 5px 0 0 0;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* --- CONTENEDOR PRINCIPAL --- */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --- TARJETA DEL PORTAL (LOGIN / REGISTRO) --- */
+        .portal-box {
+            background-color: white;
+            padding: 35px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        /* --- ESTILOS PARA EL LOGOTIPO --- */
+        .logo-container {
+            text-align: center; /* Centra la imagen horizontalmente */
+            margin-bottom: 20px; /* Espacio libre abajo del logo antes de las pestañas */
+        }
+
+        .logo-escuela {
+            max-width: 230px; /* Ancho máximo del logo */
+            height: auto;     /* Mantiene la proporción para que no se deforme */
+            object-fit: contain;
+        }
+
+        /* --- PESTAÑAS DE NAVEGACIÓN --- */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #edf2f7;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #a0aec0;
+            cursor: pointer;
+            width: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: #1a365d;
+            border-bottom: 3px solid #1a365d;
+        }
+
+        /* --- CONTROLES DE FORMULARIO --- */
+        .form-section {
+            display: none; 
+        }
+
+        .form-section.active {
+            display: block; 
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+        }
+
+        .indicador-usuario {
+            font-size: 0.85rem;
+            color: #2b6cb0;
+            font-weight: bold;
+            margin-top: 6px;
+            display: block;
+        }
+
+        /* --- BOTÓN PRINCIPAL --- */
+        .btn-action {
+            width: 100%;
+            background-color: #3182ce;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-action:hover {
+            background-color: #2b6cb0;
+        }
+
+        /* --- PIE DE PÁGINA --- */
+        footer {
+            background-color: #edf2f7;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.85rem;
+            color: #718096;
+            border-top: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Portal Escolar</h1>
+        <p>Sistema de Acceso para Alumnos</p>
+    </header>
+
+    <main>
+        <div class="portal-box">
+            
+            <div class="logo-container">
+                <img src="logo.png" alt="Logotipo de la Escuela" class="logo-escuela">
+            </div>
+            
+            <div class="tabs">
+                <button id="btn-tab-login" class="tab-btn active" onclick="cambiarPestana('login-section', 'btn-tab-login')">Iniciar Sesión</button>
+                <button id="btn-tab-reg" class="tab-btn" onclick="cambiarPestana('registro-section', 'btn-tab-reg')">Registrarse</button>
+            </div>
+
+            <div id="login-section" class="form-section active">
+                <form id="form-login">
+                    <div class="form-group">
+                        <label for="login-usuario">Usuario (Nombre2026):</label>
+                        <input type="text" id="login-usuario" placeholder="Ej. Carlos2026" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Contraseña:</label>
+                        <input type="password" id="login-password" placeholder="Ingresa tu contraseña" required>
+                    </div>
+                    <button type="submit" class="btn-action">Ingresar al Portal</button>
+                </form>
+            </div>
+
+            <div id="registro-section" class="form-section">
+                <form id="form-registro">
+                    <div class="form-group">
+                        <label for="reg-nombre">Escribe tu primer nombre:</label>
+                        <input type="text" id="reg-nombre" placeholder="Ej. Carlos" required oninput="generarNombreUsuario()">
+                        <small class="indicador-usuario">Tu usuario será: <span id="sugerencia-usuario">...2026</span></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Crea tu contraseña:</label>
+                        <input type="password" id="reg-password" placeholder="Mínimo 4 caracteres" required>
+                    </div>
+                    <button type="submit" class="btn-action">Crear mi Cuenta</button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Instituto Educativo. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // 1. Control de las Pestañas (Cambiar de Vista)
+        function cambiarPestana(seccionId, botonId) {
+            document.querySelectorAll('.form-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(seccionId).classList.add('active');
+            document.getElementById(botonId).classList.add('active');
+        }
+
+        // 2. Generador Automático de Usuario "Nombre2026"
+        function generarNombreUsuario() {
+            const nombreInput = document.getElementById('reg-nombre').value.trim();
+            const nombreLimpio = nombreInput.replace(/\s+/g, ''); 
+            const sugerencia = document.getElementById('sugerencia-usuario');
+            
+            if (nombreLimpio !== "") {
+                sugerencia.textContent = nombreLimpio + "2026";
+            } else {
+                sugerencia.textContent = "...2026";
+            }
+        }
+
+        // 3. Procesar el Registro de Alumnos
+        document.getElementById('form-registro').addEventListener('submit', (evento) => {
+            evento.preventDefault(); 
+            
+            const nombreInput = document.getElementById('reg-nombre').value.trim().replace(/\s+/g, '');
+            const passwordInput = document.getElementById('reg-password').value.trim();
+            
+            const usuarioGenerado = nombreInput + "2026";
+
+            if (passwordInput.length < 4) {
+                alert("Por seguridad, la contraseña debe tener al menos 4 caracteres.");
+                return;
+            }
+
+            localStorage.setItem('alumno_usuario', usuarioGenerado.toLowerCase());
+            localStorage.setItem('alumno_password', passwordInput);
+
+            alert(`¡Registro exitoso!\n\nTu usuario para ingresar es: ${usuarioGenerado}\nYa puedes iniciar sesión con tu contraseña.`);
+            
+            document.getElementById('form-registro').reset();
+            document.getElementById('sugerencia-usuario').textContent = "...2026";
+            
+            cambiarPestana('login-section', 'btn-tab-login');
+        });
+
+        // 4. Procesar el Inicio de Sesión
+        document.getElementById('form-login').addEventListener('submit', (evento) => {
+            evento.preventDefault(); 
+
+            const usuarioIngresado = document.getElementById('login-usuario').value.trim().toLowerCase();
+            const passwordIngresada = document.getElementById('login-password').value.trim();
+
+            const usuarioRegistrado = localStorage.getItem('alumno_usuario');
+            const passwordRegistrada = localStorage.getItem('alumno_password');
+
+            if (!usuarioRegistrado) {
+                alert("No se encontró ningún alumno registrado en este navegador. Por favor, ve primero a la pestaña 'Registrarse'.");
+                return;
+            }
+
+            if (usuarioIngresado === usuarioRegistrado && passwordIngresada === passwordRegistrada) {
+                alert("¡Felicidades! Credenciales correctas.\nHas ingresado con éxito al Portal Escolar.");
+                
+                // Redirecciona al alumno a la página del aula virtual
+                window.location.href = "panel_alumno.html"; 
+                
+            } else {
+                alert("Acceso denegado: El usuario o la contraseña no coinciden. Inténtalo nuevamente.");
+            }
+        });
+    </script>
+</body>
+<style>html{
+ color:darkviolet;
+ font-size:25px;
+ font-weight:600;
+}
+</style><script>/*Here write your javascript code*/</script></html>
