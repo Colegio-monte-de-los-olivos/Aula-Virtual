@@ -139,29 +139,40 @@
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em; color: #2da44e; outline: none;">
             🎯 Nuestra Misión
         </summary>
-        <p id="texto-mision" style="margin-top: 15px; color: #444; line-height: 1.6; padding-left: 5px; min-height: 40px; font-family: monospace;"></p>
+        <p id="texto-mision" style="margin-top: 15px; color: #444; line-height: 1.6; padding-left: 5px; min-height: 40px; font-family: 'Courier New', Courier, monospace;"></p>
     </details>
 
-    <details id="details-vision" style="background: #f6f8fa; padding: 15px; border-radius: 8px; border-left: 5px solid #4285F4;">
+    <details id="details-vision" style="margin-bottom: 15px; background: #f6f8fa; padding: 15px; border-radius: 8px; border-left: 5px solid #4285F4;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em; color: #4285F4; outline: none;">
             👁️ Nuestra Visión
         </summary>
-        <p id="texto-vision" style="margin-top: 15px; color: #444; line-height: 1.6; padding-left: 5px; min-height: 40px; font-family: monospace;"></p>
+        <p id="texto-vision" style="margin-top: 15px; color: #444; line-height: 1.6; padding-left: 5px; min-height: 40px; font-family: 'Courier New', Courier, monospace;"></p>
+    </details>
+
+    <details id="details-calidad" style="background: #f6f8fa; padding: 15px; border-radius: 8px; border-left: 5px solid #032b69;">
+        <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em; color: #032b69; outline: none;">
+            🏅 Política de Calidad
+        </summary>
+        <p id="texto-calidad" style="margin-top: 15px; color: #444; line-height: 1.6; padding-left: 5px; min-height: 40px; font-family: 'Courier New', Courier, monospace;"></p>
     </details>
 </section>
 
 <script>
-    // Tus textos reales integrados para el tecleo automático
+    // TEXTOS OFICIALES PARA EL EFECTO DE TECLEO
     const textoMisionReal = "COLEGIO DEDICADO A QUE LOS ALUMNOS APRENDAN A SER CREATIVOS EN SU VIDA DIARIA Y PROFESIONAL.";
     const textoVisionReal = "LLEGAR A SER UNA INSTITUCIÓN LÍDER A NIVEL ESTADO.";
+    const textoCalidadReal = "Nos comprometemos a ofrecer un servicio educativo de excelencia, enfocado en la mejora continua de nuestros procesos, la capacitación docente y el uso de herramientas tecnológicas para satisfacer las necesidades de nuestra comunidad escolar.";
 
+    // Estados para que el efecto solo ocurra la primera vez que se abre
     let misionEscrita = false;
     let visionEscrita = false;
+    let calidadEscrita = false;
 
+    // Función principal de la máquina de escribir
     function maquinaDeEscribir(texto, elementoId, velocidad = 40) {
         let i = 0;
         const elemento = document.getElementById(elementoId);
-        elemento.innerHTML = ""; 
+        elemento.innerHTML = ""; // Limpiar antes de empezar
         
         function teclear() {
             if (i < texto.length) {
@@ -173,22 +184,31 @@
         teclear();
     }
 
-    // Detectar cuando abren la Misión
-    document.getElementById('details-mision').addEventListener('toggle', function(e) {
+    // Evento para Misión
+    document.getElementById('details-mision').addEventListener('toggle', function() {
         if (this.open && !misionEscrita) {
             maquinaDeEscribir(textoMisionReal, 'texto-mision');
             misionEscrita = true;
         }
     });
 
-    // Detectar cuando abren la Visión
-    document.getElementById('details-vision').addEventListener('toggle', function(e) {
+    // Evento para Visión
+    document.getElementById('details-vision').addEventListener('toggle', function() {
         if (this.open && !visionEscrita) {
             maquinaDeEscribir(textoVisionReal, 'texto-vision');
             visionEscrita = true;
         }
     });
+
+    // Evento para Política de Calidad
+    document.getElementById('details-calidad').addEventListener('toggle', function() {
+        if (this.open && !calidadEscrita) {
+            maquinaDeEscribir(textoCalidadReal, 'texto-calidad');
+            calidadEscrita = true;
+        }
+    });
 </script>
+
 
                 
                 <!-- SECCIÓN 2: BOTÓN DE REDIRECCIÓN A YOUTUBE -->
