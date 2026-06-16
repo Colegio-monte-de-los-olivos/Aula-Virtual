@@ -197,9 +197,14 @@
                         <input type="text" id="login-usuario" placeholder="Ej. Carlos2026" required>
                     </div>
                     <div class="form-group">
-                        <label for="login-password">Contraseña:</label>
-                        <input type="password" id="login-password" placeholder="Ingresa tu contraseña" required>
-                    </div>
+    <label for="login-password">Contraseña:</label>
+    <div style="position: relative; display: flex; align-items: center;">
+        <input type="password" id="login-password" placeholder="Ingresa tu contraseña" required style="width: 100%; padding-right: 40px; box-sizing: border-box;">
+        <button type="button" id="togglePassword" style="position: absolute; right: 10px; background: none; border: none; cursor: pointer; font-size: 18px; padding: 0; color: #57606a; display: flex; align-items: center; justify-content: center;" title="Mostrar/Ocultar contraseña">
+            👁️
+        </button>
+    </div>
+</div>
                     <button type="submit" class="btn-action">Ingresar al Portal</button>
                 </form>
             </div>
@@ -300,6 +305,19 @@
             }
         });
     </script>
+    <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const passwordInput = document.querySelector('#login-password');
+
+    togglePassword.addEventListener('click', function () {
+        // Cambia entre oculto (password) y visible (text)
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        // Cambia el icono en pantalla
+        this.textContent = type === 'password' ? '👁️' : '🙈';
+    });
+</script>
 </body>
 <style>html{
  color:darkviolet;
