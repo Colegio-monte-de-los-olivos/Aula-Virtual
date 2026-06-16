@@ -132,30 +132,63 @@
                     </video>
                 </div>
 
-<!-- SECCIÓN INTERACTIVA: MISIÓN Y VISIÓN -->
 <section class="card" style="margin-top: 20px; padding: 20px;">
     <h2 style="text-align: center; margin-bottom: 15px;">🏫 Identidad Institucional</h2>
 
-    <!-- MISIÓN -->
-    <details style="margin-bottom: 15px; background: #f6f8fa; padding: 15px; border-radius: 8px; border-left: 5px solid #2da44e;">
+    <details id="details-mision" style="margin-bottom: 15px; background: #f6f8fa; padding: 15px; border-radius: 8px; border-left: 5px solid #2da44e;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em; color: #2da44e; outline: none;">
-            🎯 Nuestra  Misión
+            🎯 Nuestra Misión
         </summary>
-        <p style="margin-top: 15px; color: #444; line-height: 1.6; padding-left: 5px;">
-            COLEGIO DEDICADO A QUE LOS ALUMNOS APRENDAN HACER CREATIVOS EN SU VIDA DIARIA Y PROFECIONAL
-        </p>
+        <p id="texto-mision" style="margin-top: 15px; color: #444; line-height: 1.6; padding-left: 5px; min-height: 40px; font-family: monospace;"></p>
     </details>
 
-    <!-- VISIÓN -->
-    <details style="background: #f6f8fa; padding: 15px; border-radius: 8px; border-left: 5px solid #4285F4;">
+    <details id="details-vision" style="background: #f6f8fa; padding: 15px; border-radius: 8px; border-left: 5px solid #4285F4;">
         <summary style="cursor: pointer; font-weight: bold; font-size: 1.1em; color: #4285F4; outline: none;">
             👁️ Nuestra Visión
         </summary>
-        <p style="margin-top: 15px; color: #444; line-height: 1.6; padding-left: 5px;">
-            LLEGAR A HACER UNA INSTITUCION LIDER A NIVEL ESTADO
-        </p>
+        <p id="texto-vision" style="margin-top: 15px; color: #444; line-height: 1.6; padding-left: 5px; min-height: 40px; font-family: monospace;"></p>
     </details>
 </section>
+
+<script>
+    // Tus textos reales integrados para el tecleo automático
+    const textoMisionReal = "COLEGIO DEDICADO A QUE LOS ALUMNOS APRENDAN A SER CREATIVOS EN SU VIDA DIARIA Y PROFESIONAL.";
+    const textoVisionReal = "LLEGAR A SER UNA INSTITUCIÓN LÍDER A NIVEL ESTADO.";
+
+    let misionEscrita = false;
+    let visionEscrita = false;
+
+    function maquinaDeEscribir(texto, elementoId, velocidad = 40) {
+        let i = 0;
+        const elemento = document.getElementById(elementoId);
+        elemento.innerHTML = ""; 
+        
+        function teclear() {
+            if (i < texto.length) {
+                elemento.innerHTML += texto.charAt(i);
+                i++;
+                setTimeout(teclear, velocidad);
+            }
+        }
+        teclear();
+    }
+
+    // Detectar cuando abren la Misión
+    document.getElementById('details-mision').addEventListener('toggle', function(e) {
+        if (this.open && !misionEscrita) {
+            maquinaDeEscribir(textoMisionReal, 'texto-mision');
+            misionEscrita = true;
+        }
+    });
+
+    // Detectar cuando abren la Visión
+    document.getElementById('details-vision').addEventListener('toggle', function(e) {
+        if (this.open && !visionEscrita) {
+            maquinaDeEscribir(textoVisionReal, 'texto-vision');
+            visionEscrita = true;
+        }
+    });
+</script>
 
                 
                 <!-- SECCIÓN 2: BOTÓN DE REDIRECCIÓN A YOUTUBE -->
