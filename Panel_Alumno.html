@@ -1,6 +1,103 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <div class="card" style="margin-top: 15px; padding: 15px; text-align: center; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden;">
+    <h3 style="margin: 0 0 10px 0; color: #333; font-size: 1.1em;">🌤️ Estado del Tiempo Escolar</h3>
+    
+    <div id="contenedor-clima" style="font-size: 50px; line-height: 1; margin-bottom: 5px; height: 60px; display: flex; align-items: center; justify-content: center;">
+        🔍 </div>
+    
+    <p id="texto-clima" style="margin: 0; font-weight: bold; color: #555; font-size: 0.9em;">Cargando clima del colegio...</p>
+</div>
+
+<style>
+    /* 1. Animación para que el Sol gire suavemente */
+    .animacion-sol {
+        animation: girarSol 20s linear infinite;
+        display: inline-block;
+    }
+    @keyframes girarSol {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* 2. Animación para que la Luna e iconos floten de arriba a abajo */
+    .animacion-flotar {
+        animation: flotarEfecto 3s ease-in-out infinite;
+        display: inline-block;
+    }
+    @keyframes flotarEfecto {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+
+    /* 3. Animación para la nube lluviosa (tiembla y flota) */
+    .animacion-lluvia {
+        animation: lloverEfecto 2s ease-in-out infinite;
+        display: inline-block;
+    }
+    @keyframes lloverEfecto {
+        0%, 100% { transform: translateY(0) scale(1); }
+        50% { transform: translateY(-4px) scale(1.05); }
+    }
+</style>
+
+<script>
+    async function consultarClimaDinamico() {
+        const contenedor = document.getElementById('contenedor-clima');
+        const texto = document.getElementById('texto-clima');
+        
+        // 1. Revisar la hora local del alumno
+        const horaActual = new Date().getHours();
+        const esDeDia = horaActual >= 6 && horaActual < 19; // De día entre 6am y 7pm
+
+        try {
+            // Conexión al radar meteorológico gratuito para Nicolás Romero, EdoMex
+            // Coordenadas aproximadas de Nicolás Romero: Lat 19.63, Lon -99.31
+            const respuesta = await fetch('https://api.open-meteo.com/v1/forecast?latitude=19.63&longitude=-99.31&current_weather=true');
+            const datos = await respuesta.json();
+            
+            const codigoClima = datos.current_weather.weathercode;
+            const temperatura = Math.round(datos.current_weather.temperature);
+            
+            /* Códigos de Open-Meteo:
+               51 al 67, 80 al 86 = Lluvia / Chubascos
+               1, 2, 3 = Nublado
+               0 = Despejado
+            */
+            const esLluvia = [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82, 85, 86].includes(codigoClima);
+            const esNublado = [1, 2, 3].includes(codigoClima);
+
+            // 2. Decidir qué dibujito con movimiento mostrar según el tiempo real
+            if (esLluvia) {
+                contenedor.innerHTML = '<span class="animacion-lluvia">🌧️</span>';
+                texto.innerHTML = `¡Está lloviendo en el colegio! 💧 ${temperatura}°C`;
+            } else if (esNublado) {
+                contenedor.innerHTML = '<span class="animacion-flotar">☁️</span>';
+                texto.innerHTML = `El día está nublado 🌥️ ${temperatura}°C`;
+            } else if (esDeDia) {
+                contenedor.innerHTML = '<span class="animacion-sol">☀️</span>';
+                texto.innerHTML = `¡Qué lindo día soleado! 🏫 ${temperatura}°C`;
+            } else {
+                contenedor.innerHTML = '<span class="animacion-flotar">🌙</span>';
+                texto.innerHTML = `Buenas noches alumnos ✨ ${temperatura}°C`;
+            }
+
+        } catch (error) {
+            // Si el internet falla, usa la hora de la computadora como plan de respaldo
+            if (esDeDia) {
+                contenedor.innerHTML = '<span class="animacion-sol">☀️</span>';
+                texto.innerHTML = "¡Hola! Que tengas un excelente día escolar 🏫";
+            } else {
+                contenedor.innerHTML = '<span class="animacion-flotar">🌙</span>';
+                texto.innerHTML = "Buenas noches alumnos, recuerden descansar ✨";
+            }
+        }
+    }
+
+    // Ejecutar la función en cuanto cargue la página
+    consultarClimaDinamico();
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aula Virtual - Mis Clases y Materiales</title>
