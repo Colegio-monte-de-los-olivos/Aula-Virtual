@@ -268,8 +268,8 @@
     const textoMisionReal = "Transformar vidas a través de una educación de calidad, accesible e inspiradora, formando niñas, niños, jóvenes y profesionistas íntegros, preparados para enfrentar los retos de un mundo en constante evolución. En el Colegio Monte de los Olivos brindamos una formación académica y humana de excelencia en los niveles de primaria, secundaria, bachillerato y licenciatura, fortaleciendo el desarrollo de conocimientos, habilidades, valores y liderazgo.\n\nGuiados por la filosofía y el prestigio académico de nuestra Máxima Casa de Estudios, la UNAM, trabajamos con vocación, compromiso y profesionalismo para ofrecer oportunidades educativas al alcance de todos los sectores de la sociedad, contribuyendo a la construcción de un futuro mejor para nuestras familias y nuestra comunidad.\n\n\"Educamos con valores, inspiramos con conocimiento y formamos líderes para transformar el mundo.\" ✨📚🎓";
     const textoVisionReal = "Ser una institución educativa reconocida por su excelencia académica, su formación integral y su compromiso con el desarrollo humano, consolidándose como un referente educativo a nivel estatal y nacional.\n\nAspiramos a construir una comunidad educativa donde alumnos, docentes, padres de familia y personal administrativo trabajen unidos con pasión, responsabilidad y visión de futuro, impulsando una cultura de mejora continua, innovación y éxito.\n\nNuestro propósito es contribuir a la formación de ciudadanos íntegros, líderes y comprometidos con la transformación positiva de la sociedad. Asimismo, ampliando nuestra oferta educativa y elevando la calidad de nuestros servicios.\n\nProyectamos un crecimiento sostenido que nos permita contar con instalaciones modernas, espacios deportivos, culturales y áreas verdes que favorezcan el desarrollo integral de nuestros estudiantes, brindándoles las herramientas necesarias para alcanzar su máximo potencial y convertirse en agentes de cambio para un mundo mejor.\n\n\"Ser reconocidos por educar con excelencia, formar con valores y transformar el futuro de nuestra sociedad.\"\n\n🎓 Excelencia académica\n🌿 Formación integral y valores\n🚀 Innovación y mejora continua\n🤝 Compromiso con la comunidad\n🏆 Liderazgo educativo y visión de futuro";
     const textoCalidadReal = "En el Colegio Monte de los Olivos estamos comprometidos con la excelencia educativa, ofreciendo una formación académica y humana de alta calidad que impulse el desarrollo integral de nuestros estudiantes y los prepare para alcanzar sus metas personales, profesionales y sociales.\n\nTrabajamos con vocación de servicio, responsabilidad y compromiso, promoviendo un modelo educativo innovador que fomente el pensamiento crítico, la creatividad, el liderazgo y el espíritu emprendedor, siempre sustentado en sólidos principios y valores.\n\nNuestro compromiso con la mejora continua nos impulsa a fortalecer permanentemente nuestros procesos académicos y administrativos, así como la capacitación y actualización constante de nuestro personal docente y administrativo, garantizando una educación pertinente y acorde con las necesidades de una sociedad en constante transformación.\n\nBuscamos la satisfacción de nuestra comunidad educativa y el reconocimiento de la sociedad mediante la prestación de servicios educativos de excelencia, formando ciudadanos íntegros, responsables y capaces de contribuir positivamente al desarrollo de su entorno y de nuestro país.\n\n\"La calidad es nuestro compromiso; la formación integral, nuestra misión; y el éxito de nuestros estudiantes, nuestra mayor satisfacción.\"";
-    const textoHistoriaReal = " 
-    const textoSignificadoReal = "
+    const textoHistoriaReal = "Mi historia empezo"
+    const textoSignificadoReal = "El logo fue seleccionado"
     // Estados para que el efecto solo ocurra la primera vez que se abre
     let misionEscrita = false;
     let visionEscrita = false;
@@ -490,43 +490,76 @@
     });
 
     function registrarAsistenciaBiometrica() {
-        const nombre = document.getElementById('nombreAlumnoAsistencia').value.trim();
-        const mensaje = document.getElementById('mensajeAsistencia');
+    // 1. Intentar obtener los datos del alumno de tu sistema (si no existen, usa genéricos)
+    const nombreAlumno = window.nombreUsuario Alumno || "Alumno Monte de los Olivos";
+    const matriculaAlumno = window.matriculaUsuarioAlumno || "2026-OLIVOS";
+
+    // 2. Obtener los elementos visuales del botón y texto
+    const boton = document.querySelector('.btn-biometrico-huella');
+    const icono = document.querySelector('.icono-huella');
+    const textoEscaner = document.getElementById('texto-escaner');
+
+    // Evitar que le den doble clic mientras está escaneando
+    if (textoEscaner.innerText === "ESCANEANDO... ⏳" || textoEscaner.innerText.includes("REGISTRADA")) return;
+
+    // 3. ESTADO: ESCANEANDO (Efecto Visual Azul Neón)
+    textoEscaner.innerText = "ESCANEANDO... ⏳";
+    textoEscaner.style.color = "#3b82f6"; // Azul de carga
+    boton.style.borderColor = "#3b82f6";
+    boton.style.boxShadow = "0 0 20px rgba(59, 130, 246, 0.8)";
+    icono.style.color = "#3b82f6";
+    icono.style.transform = "scale(1.1)";
+
+    // 4. Obtener Fecha y Hora Exacta en ese segundo
+    const ahora = new Date();
+    const horaExacta = ahora.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const fechaExacta = ahora.toLocaleDateString('es-MX');
+
+    // 5. Simular el tiempo de lectura del sensor (2 segundos)
+    setTimeout(() => {
         
-        if (nombre === "") {
-            mensaje.style.color = "#e74c3c";
-            mensaje.innerHTML = "⚠️ Por favor, escribe tu nombre antes de escanear tu huella.";
-            return;
+        // --- AQUÍ SE CONECTA CON TU EXCEL (GOOGLE APPS SCRIPT WEBHOOK) ---
+        // Cuando tengas tu URL de Google Sheets, la pegas dentro de las comillas de abajo:
+        const urlExcelWebhook = ""; 
+
+        if (urlExcelWebhook !== "") {
+            fetch(urlExcelWebhook, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    nombre: nombreAlumno,
+                    matricula: matriculaAlumno,
+                    fecha: fechaExacta,
+                    hora: horaExacta,
+                    estatus: "Asistencia"
+                })
+            });
         }
+        // -----------------------------------------------------------------
 
-        // Modificar textos durante el escaneo
-        textoEscaner.innerText = "ESCANEANDO...";
-        textoEscaner.style.color = "#38bdf8";
+        // 6. ESTADO: ASISTENCIA REGISTRADA (Efecto Visual Verde Éxito)
+        textoEscaner.innerText = "¡ASISTENCIA REGISTRADA! ✓";
+        textoEscaner.style.color = "#10b981"; // Verde éxito
+        boton.style.borderColor = "#10b981";
+        boton.style.boxShadow = "0 0 25px rgba(16, 185, 129, 0.9)";
+        icono.style.color = "#10b981";
+        icono.style.transform = "scale(1)";
 
-        // Llenar los campos del formulario oculto
-        document.getElementById('campoFormNombre').value = nombre;
-        document.getElementById('campoFormEstatus').value = "Asistencia";
+        // Mostrar notificación elegante en pantalla
+        alert(`✨ ¡Sistema Biométrico Monte de los Olivos! ✨\n\nHola ${nombreAlumno}.\nTu asistencia ha sido registrada exitosamente.\n📅 Fecha: ${fechaExacta}\n⏰ Hora: ${horaExacta}`);
 
-        // Enviar el formulario de forma invisible
-        document.getElementById('formularioAsistenciaOculto').submit();
-
-        // Mostrar animación de éxito
+        // 7. REINICIAR EL SENSOR: Regresa a la normalidad después de 4 segundos
         setTimeout(() => {
-            mensaje.style.color = "#27ae60";
-            mensaje.innerHTML = "🟢 ¡Identidad Confirmada! Asistencia guardada en Drive.";
-            textoEscaner.innerText = "ACCESO CONCEDIDO";
-            textoEscaner.style.color = "#27ae60";
-        }, 600); // Pequeña pausa simulando que el lector "lee" la huella
-        
-        // Limpiar todo después de unos segundos
-        setTimeout(() => {
-            document.getElementById('nombreAlumnoAsistencia').value = "";
-            mensaje.innerHTML = "";
             textoEscaner.innerText = "SISTEMA APAGADO";
-            textoEscaner.style.color = "#64748b";
-        }, 3500);
-    }
-</script>
+            textoEscaner.style.color = "#64748b"; // Gris original
+            boton.style.borderColor = "#64748b";
+            boton.style.boxShadow = "0 4px 10px rgba(0,0,0,0.3)";
+            icono.style.color = "#64748b";
+        }, 4000);
+
+    }, 2000); // Fin de los 2 segundos de escaneo
+}
 
     </main>
 
