@@ -388,19 +388,19 @@
 </div>
         <div class="card" style="margin-top: 20px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center;">
     <h2 style="color: #2c3e50; margin-top: 0; border-bottom: 2px solid #e0f2fe; padding-bottom: 10px; text-align: left;">
-        🫵 Registro de Asistencia Biométrico
+        🧬 Registro de Asistencia Biométrico
     </h2>
-    <p style="color: #555; font-size: 0.95em; text-align: left;">Por favor, ingresa tu nombre completo y presiona el lector de huella digital para registrar tu asistencia del día:</p>
+    <p style="color: #555; font-size: 0.95em; text-align: left;">Por favor, ingresa tu nombre completo y coloca tu dedo sobre el lector de huella dactilar para registrar tu entrada:</p>
 
     <div style="margin: 20px 0;">
         <input type="text" id="nombreAlumnoAsistencia" placeholder="Escribe tu nombre aquí..." style="padding: 12px; width: 80%; max-width: 400px; border: 2px solid #cbd5e1; border-radius: 6px; font-size: 1em; outline: none; transition: border-color 0.2s;">
     </div>
 
     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 15px;">
-        <button onclick="registrarAsistenciaBiometrica()" class="btn-biometrico" style="background: #2c3e50; border: none; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-            <span style="font-size: 50px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));">☝️</span>
+        <button onclick="registrarAsistenciaBiometrica()" class="btn-biometrico-huella" style="background: #1e293b; border: 3px solid #64748b; width: 110px; height: 110px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.4s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative; overflow: hidden;">
+            <span class="icono-huella" style="font-size: 52px; color: #64748b; transition: all 0.4s ease; filter: drop-shadow(0 0 2px rgba(0,0,0,0.5)); line-height: 1;">👣</span>
         </button>
-        <span style="margin-top: 10px; font-weight: bold; color: #64748b; font-size: 0.85em; letter-spacing: 1px;">PULSAR HUELLA</span>
+        <span id="texto-escaner" style="margin-top: 12px; font-weight: bold; color: #64748b; font-size: 0.8em; letter-spacing: 2px; transition: color 0.3s;">SISTEMA APAGADO</span>
     </div>
 
     <p id="mensajeAsistencia" style="font-weight: bold; font-size: 1em; margin: 10px 0 0 0; min-height: 24px;"></p>
@@ -413,47 +413,88 @@
 </div>
 
 <style>
-    .btn-biometrico:hover {
-        background: #0284c7 !important; /* Cambia a Azul Cielo brillante al pasar el cursor */
-        transform: scale(1.08);
-        box-shadow: 0 0 20px rgba(2, 132, 199, 0.6) !important;
+    /* Cuando el alumno pasa el cursor sobre el botón (Listo para escanear) */
+    .btn-biometrico-huella:hover {
+        border-color: #38bdf8 !important; /* Borde azul brillante */
+        background: #0f172a !important;   /* Fondo más oscuro */
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.6) !important; /* Brillo azul Neon exterior */
     }
-    .btn-biometrico:active {
+    
+    /* El icono de la huella cambia a color azul brillante Neón al pasar el cursor */
+    .btn-biometrico-huella:hover .icono-huella {
+        color: #38bdf8 !important;
+        filter: drop-shadow(0 0 8px #38bdf8) !important; /* Brillo azul en la huella misma */
+        transform: scale(1.05);
+    }
+
+    /* Pequeño efecto cuando presionan el lector */
+    .btn-biometrico-huella:active {
         transform: scale(0.95);
+        box-shadow: 0 0 35px rgba(56, 189, 248, 0.9) !important;
     }
+
     #nombreAlumnoAsistencia:focus {
-        border-color: #0284c7;
+        border-color: #38bdf8;
+        box-shadow: 0 0 5px rgba(56, 189, 248, 0.3);
     }
 </style>
 
 <script>
+    // Cambiar texto de estado cuando pasan el cursor
+    const botonHuella = document.querySelector('.btn-biometrico-huella');
+    const textoEscaner = document.getElementById('texto-escaner');
+
+    botonHuella.addEventListener('mouseenter', () => {
+        if(document.getElementById('nombreAlumnoAsistencia').value.trim() !== "") {
+            textoEscaner.innerText = "LISTO PARA ESCANEAR";
+            textoEscaner.style.color = "#38bdf8";
+        } else {
+            textoEscaner.innerText = "INGRESA TU NOMBRE";
+            textoEscaner.style.color = "#e74c3c";
+        }
+    });
+
+    botonHuella.addEventListener('mouseleave', () => {
+        textoEscaner.innerText = "SISTEMA APAGADO";
+        textoEscaner.style.color = "#64748b";
+    });
+
     function registrarAsistenciaBiometrica() {
         const nombre = document.getElementById('nombreAlumnoAsistencia').value.trim();
         const mensaje = document.getElementById('mensajeAsistencia');
         
-        // Validar que no esté vacío
         if (nombre === "") {
             mensaje.style.color = "#e74c3c";
-            mensaje.innerHTML = "⚠️ Por favor, escribe tu nombre antes de pulsar la huella.";
+            mensaje.innerHTML = "⚠️ Por favor, escribe tu nombre antes de escanear tu huella.";
             return;
         }
 
+        // Modificar textos durante el escaneo
+        textoEscaner.innerText = "ESCANEANDO...";
+        textoEscaner.style.color = "#38bdf8";
+
         // Llenar los campos del formulario oculto
         document.getElementById('campoFormNombre').value = nombre;
-        document.getElementById('campoFormEstatus').value = "Asistencia"; // Aquí tu Excel recibirá el texto
+        document.getElementById('campoFormEstatus').value = "Asistencia";
 
         // Enviar el formulario de forma invisible
         document.getElementById('formularioAsistenciaOculto').submit();
 
-        // Mostrar animación de éxito en la pantalla del alumno
-        mensaje.style.color = "#27ae60";
-        mensaje.innerHTML = "🟢 ¡Escaneo Biométrico Exitoso! Asistencia registrada.";
+        // Mostrar animación de éxito
+        setTimeout(() => {
+            mensaje.style.color = "#27ae60";
+            mensaje.innerHTML = "🟢 ¡Identidad Confirmada! Asistencia guardada en Drive.";
+            textoEscaner.innerText = "ACCESO CONCEDIDO";
+            textoEscaner.style.color = "#27ae60";
+        }, 600); // Pequeña pausa simulando que el lector "lee" la huella
         
-        // Limpiar el campo de texto después de 3 segundos
+        // Limpiar todo después de unos segundos
         setTimeout(() => {
             document.getElementById('nombreAlumnoAsistencia').value = "";
             mensaje.innerHTML = "";
-        }, 3000);
+            textoEscaner.innerText = "SISTEMA APAGADO";
+            textoEscaner.style.color = "#64748b";
+        }, 3500);
     }
 </script>
 
