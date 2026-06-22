@@ -386,6 +386,76 @@
         </a>
     </div>
 </div>
+        <div class="card" style="margin-top: 20px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center;">
+    <h2 style="color: #2c3e50; margin-top: 0; border-bottom: 2px solid #e0f2fe; padding-bottom: 10px; text-align: left;">
+        🫵 Registro de Asistencia Biométrico
+    </h2>
+    <p style="color: #555; font-size: 0.95em; text-align: left;">Por favor, ingresa tu nombre completo y presiona el lector de huella digital para registrar tu asistencia del día:</p>
+
+    <div style="margin: 20px 0;">
+        <input type="text" id="nombreAlumnoAsistencia" placeholder="Escribe tu nombre aquí..." style="padding: 12px; width: 80%; max-width: 400px; border: 2px solid #cbd5e1; border-radius: 6px; font-size: 1em; outline: none; transition: border-color 0.2s;">
+    </div>
+
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 15px;">
+        <button onclick="registrarAsistenciaBiometrica()" class="btn-biometrico" style="background: #2c3e50; border: none; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+            <span style="font-size: 50px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.3));">☝️</span>
+        </button>
+        <span style="margin-top: 10px; font-weight: bold; color: #64748b; font-size: 0.85em; letter-spacing: 1px;">PULSAR HUELLA</span>
+    </div>
+
+    <p id="mensajeAsistencia" style="font-weight: bold; font-size: 1em; margin: 10px 0 0 0; min-height: 24px;"></p>
+
+    <iframe name="puenteInvisible" id="puenteInvisible" style="display:none;"></iframe>
+    <form id="formularioAsistenciaOculto" action="https://docs.google.com/forms/d/e/1FAIpQLSfRGKWmgv9k5IiI4j6iaHB92CbMiYSXkYw-2NpR1z20JYD8hA/formResponse" method="POST" target="puenteInvisible" style="display: none;">
+        <input type="hidden" id="campoFormNombre" name="entry.1205424758">
+        <input type="hidden" id="campoFormEstatus" name="entry.1711050623">
+    </form>
+</div>
+
+<style>
+    .btn-biometrico:hover {
+        background: #0284c7 !important; /* Cambia a Azul Cielo brillante al pasar el cursor */
+        transform: scale(1.08);
+        box-shadow: 0 0 20px rgba(2, 132, 199, 0.6) !important;
+    }
+    .btn-biometrico:active {
+        transform: scale(0.95);
+    }
+    #nombreAlumnoAsistencia:focus {
+        border-color: #0284c7;
+    }
+</style>
+
+<script>
+    function registrarAsistenciaBiometrica() {
+        const nombre = document.getElementById('nombreAlumnoAsistencia').value.trim();
+        const mensaje = document.getElementById('mensajeAsistencia');
+        
+        // Validar que no esté vacío
+        if (nombre === "") {
+            mensaje.style.color = "#e74c3c";
+            mensaje.innerHTML = "⚠️ Por favor, escribe tu nombre antes de pulsar la huella.";
+            return;
+        }
+
+        // Llenar los campos del formulario oculto
+        document.getElementById('campoFormNombre').value = nombre;
+        document.getElementById('campoFormEstatus').value = "Asistencia"; // Aquí tu Excel recibirá el texto
+
+        // Enviar el formulario de forma invisible
+        document.getElementById('formularioAsistenciaOculto').submit();
+
+        // Mostrar animación de éxito en la pantalla del alumno
+        mensaje.style.color = "#27ae60";
+        mensaje.innerHTML = "🟢 ¡Escaneo Biométrico Exitoso! Asistencia registrada.";
+        
+        // Limpiar el campo de texto después de 3 segundos
+        setTimeout(() => {
+            document.getElementById('nombreAlumnoAsistencia').value = "";
+            mensaje.innerHTML = "";
+        }, 3000);
+    }
+</script>
 
     </main>
 
