@@ -451,6 +451,38 @@
 </style>
 
 <script>
+
+function efectoMaquinaEscribir(texto, idElemento, indice = 0) {
+    const elemento = document.getElementById(idElemento);
+    
+    // Si llegamos al inicio del texto, limpiamos el contenedor por si acaso
+    if (indice === 0) {
+        elemento.innerHTML = "";
+    }
+
+    if (indice < texto.length) {
+        // Detectar si vienen dos saltos de línea (\n\n) para meter un párrafo limpio
+        if (texto.substring(indice, indice + 2) === "\n\n") {
+            elemento.innerHTML += "<br><br>";
+            indice += 2;
+        } 
+        // Detectar si viene un solo salto de línea (\n) para un renglón abajo
+        else if (texto.charAt(indice) === "\n") {
+            elemento.innerHTML += "<br>";
+            indice++;
+        } 
+        // Si es un carácter normal, lo escribe en la pantalla
+        else {
+            elemento.innerHTML += texto.charAt(indice);
+            indice++;
+        }
+        
+        // Controla la velocidad del tecleo (30 milisegundos por letra)
+        setTimeout(function() {
+            efectoMaquinaEscribir(texto, idElemento, indice);
+        }, 30);
+    }
+}
     // Cambiar texto de estado cuando pasan el cursor
     const botonHuella = document.querySelector('.btn-biometrico-huella');
     const textoEscaner = document.getElementById('texto-escaner');
