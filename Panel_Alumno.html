@@ -210,7 +210,62 @@
     </header>
 
     <main>
-        
+        <!-- ==========================================
+     CALENDARIO ESCOLAR DINÁMICO E INTERACTIVO
+     ========================================== -->
+<section style="margin-top: 30px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    
+    <!-- Encabezado del Calendario con Figura Movible -->
+    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 20px;">
+        <h2 style="color: #2c3e50; margin: 0; font-size: 1.5em; display: flex; align-items: center; gap: 10px;">
+            📅 Calendario Escolar Institucional
+        </h2>
+        <!-- Figura animada flotante -->
+        <div class="figura-movible-escolar" style="font-size: 2rem; cursor: pointer; user-select: none; animation: flotarFigura 3s ease-in-out infinite;">🎓</div>
+    </div>
+
+    <!-- Apartados / Filtros de Modificación y Visualización -->
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+        <button onclick="filtrarCalendario('todos')" class="btn-filtro-cal" style="background: #2c3e50; color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: all 0.3s;">📅 Ver Todo</button>
+        <button onclick="filtrarCalendario('vacaciones')" class="btn-filtro-cal" style="background: #f1f5f9; color: #475569; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: all 0.3s;">🏖️ Descansos y Vacaciones</button>
+        <button onclick="filtrarCalendario('calificaciones')" class="btn-filtro-cal" style="background: #f1f5f9; color: #475569; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: all 0.3s;">📝 Subida de Calificaciones</button>
+        <button onclick="filtrarCalendario('eventos')" class="btn-filtro-cal" style="background: #f1f5f9; color: #475569; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: all 0.3s;">🏛️ Eventos y Fechas Clave</button>
+    </div>
+
+    <!-- Lista Dinámica de Fechas Importantes -->
+    <div id="contenedor-fechas-calendario" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;">
+        <!-- Las tarjetas se generan dinámicamente con JavaScript -->
+    </div>
+</section>
+
+<!-- Estilos CSS necesarios para las animaciones y efectos -->
+<style>
+    @keyframes flotarFigura {
+        0% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-10px) rotate(10deg); }
+        100% { transform: translateY(0px) rotate(0deg); }
+    }
+    .tarjeta-evento-cal {
+        background: #f8fafc;
+        border-left: 5px solid #2c3e50;
+        padding: 15px;
+        border-radius: 0 8px 8px 0;
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+        overflow: hidden;
+    }
+    .tarjeta-evento-cal:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .tarjeta-evento-cal:hover .icono-tarjeta-movible {
+        animation: balancearIcono 0.5s ease infinite alternate;
+    }
+    @keyframes balancearIcono {
+        from { transform: scale(1.1) rotate(-10deg); }
+        to { transform: scale(1.1) rotate(10deg); }
+    }
+</style>
         <section class="card">
             <h2>Material Visual de la Clase</h2>
             <p>Reproduce el video explicativo de la lección antes de realizar tus actividades:</p>
@@ -228,9 +283,7 @@
                         Tu navegador no soporta la reproducción de videos locales.
                     </video>
                 </div>
-                <!-- ==========================================
-     SECCIONES INSTITUCIONALES CON EFECTO DE TECLEO
-     ========================================== -->
+                
 <section style="margin-top: 20px;">
     <!-- 1. MISIÓN -->
     <details style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 15px;">
@@ -572,6 +625,103 @@
 
     }, 2000); // Fin de los 2 segundos de escaneo
 }
+    // =========================================================================
+// BASE DE DATOS DEL CALENDARIO ESCOLAR (FÁCILMENTE MODIFICABLE DESDE AQUÍ)
+// =========================================================================
+const eventosCalendarioEscolar = [
+    // --- CATEGORÍA: VACACIONES Y DESCANSOS ---
+    { fecha: "2025-09-01", titulo: "Inicio del Ciclo Escolar", cat: "eventos", icono: "🚀", desc: "Apertura oficial de cursos del periodo escolar." },
+    { fecha: "2025-11-02", titulo: "Descanso obligatorio: Día de Muertos", cat: "vacaciones", icono: "💀", desc: "Suspensión de labores académicas y administrativas." },
+    { fecha: "2025-11-20", titulo: "Descanso obligatorio: Rev. Mexicana", cat: "vacaciones", icono: "🇲🇽", desc: "Conmemoración oficial de la Revolución Mexicana." },
+    { fecha: "2025-12-18", titulo: "Periodo Vacacional de Invierno", cat: "vacaciones", icono: "🎄", desc: "Inicio del receso escolar por fiestas decembrinas." },
+    { fecha: "2026-02-05", titulo: "Descanso: Día de la Constitución", cat: "vacaciones", icono: "📜", desc: "Aniversario de la Constitución Política." },
+    { fecha: "2026-03-16", titulo: "Descanso: Natalicio de Benito Juárez", cat: "vacaciones", icono: "🦅", desc: "Conmemoración del Benemérito de las Américas." },
+    { fecha: "2026-03-30", titulo: "Periodo Vacacional de Semana Santa", cat: "vacaciones", icono: "🏖️", desc: "Receso de actividades académicas de primavera." },
+    { fecha: "2026-05-01", titulo: "Descanso obligatorio: Día del Trabajo", cat: "vacaciones", icono: "🛠️", desc: "Suspensión de labores por el día del trabajo." },
+    { fecha: "2026-05-15", titulo: "Descanso obligatorio: Día del Maestro", cat: "vacaciones", icono: "🍎", desc: "Celebración y reconocimiento a nuestro cuerpo docente." },
+    
+    // --- CATEGORÍA: SUBIDA DE CALIFICACIONES ---
+    { fecha: "2025-10-24", titulo: "Evaluación del Primer Parcial", cat: "calificaciones", icono: "📝", desc: "Límite para captura de calificaciones en el sistema." },
+    { fecha: "2025-12-12", titulo: "Evaluación del Segundo Parcial", cat: "calificaciones", icono: "📝", desc: "Cierre de actas del periodo previo a vacaciones." },
+    { fecha: "2026-03-06", titulo: "Evaluación del Tercer Parcial", cat: "calificaciones", icono: "📝", desc: "Subida de evaluaciones ordinarias del tercer bloque." },
+    { fecha: "2026-05-29", titulo: "Evaluación del Cuarto Parcial", cat: "calificaciones", icono: "📝", desc: "Registro final del avance de asignaturas semestrales." },
+    { fecha: "2026-06-26", titulo: "Captura de Calificaciones Finales", cat: "calificaciones", icono: "📊", desc: "Cierre definitivo del historial de calificaciones." },
+
+    // --- CATEGORÍA: EVENTOS Y FECHAS CLAVE ---
+    { fecha: "2026-05-10", titulo: "Celebración del Día de las Madres", cat: "eventos", icono: "🌹", desc: "Festival institucional dedicado a las mamás de la comunidad." },
+    { fecha: "2026-07-10", titulo: "Ceremonias de Graduación", cat: "eventos", icono: "🏆", desc: "Actos académicos y entrega de documentación a egresados." },
+    { fecha: "2026-07-15", titulo: "Clausura del Ciclo Escolar", cat: "eventos", icono: "🏁", desc: "Fin oficial de las actividades del ciclo lectivo." }
+];
+
+// Colores asociados a cada categoría para pintar las tarjetas
+const coloresCategoriasCal = {
+    vacaciones: "#f59e0b",     // Ámbar / Naranja
+    calificaciones: "#ef4444",// Rojo
+    eventos: "#3b82f6"        // Azul
+};
+
+// Función para renderizar el calendario en la pantalla
+function renderizarCalendario(filtro = "todos") {
+    const contenedor = document.getElementById('contenedor-fechas-calendario');
+    contenedor.innerHTML = "";
+
+    // Filtrar los eventos según el botón presionado
+    const eventosFiltrados = eventosCalendarioEscolar.filter(ev => filtro === "todos" || ev.cat === filtro);
+
+    // Ordenar los eventos por fecha cronológica automáticamente
+    eventosFiltrados.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+    if (eventosFiltrados.length === 0) {
+        contenedor.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; text-align: center; padding: 20px;">No hay eventos registrados en esta categoría.</p>`;
+        return;
+    }
+
+    // Crear dinámicamente las tarjetas HTML de cada fecha
+    eventosFiltrados.forEach(ev => {
+        // Formatear la fecha para que se vea amigable (Ej: 10 de mayo de 2026)
+        const opcionesFecha = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' };
+        const fechaFormateada = new Date(ev.fecha).toLocaleDateString('es-MX', opcionesFecha);
+        const colorBorde = coloresCategoriasCal[ev.cat] || "#2c3e50";
+
+        const tarjetaHTML = `
+            <div class="tarjeta-evento-cal" style="border-left-color: ${colorBorde};">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <span style="font-size: 0.85rem; font-weight: bold; color: ${colorBorde}; text-transform: uppercase; letter-spacing: 0.5px;">
+                        ${ev.cat === 'vacaciones' ? '🏖️ Descanso' : ev.cat === 'calificaciones' ? '📝 Calificaciones' : '🏛️ Evento'}
+                    </span>
+                    <span class="icono-tarjeta-movible" style="font-size: 1.25rem; display: inline-block; transition: transform 0.3s;">${ev.icono}</span>
+                </div>
+                <h3 style="margin: 8px 0 4px 0; font-size: 1.05em; color: #1e293b;">${ev.titulo}</h3>
+                <p style="margin: 0 0 8px 0; font-size: 0.85rem; color: #64748b; font-weight: 500;">📅 ${fechaFormateada}</p>
+                <p style="margin: 0; font-size: 0.85rem; color: #475569; line-height: 1.4;">${ev.desc}</p>
+            </div>
+        `;
+        contenedor.innerHTML += tarjetaHTML;
+    });
+}
+
+// Función encargada de manejar la activación de los botones de filtro
+function filtrarCalendario(categoria) {
+    // Renderizar los elementos filtrados
+    renderizarCalendario(categoria);
+
+    // Cambiar estilos visuales de los botones para saber cuál está activo
+    const botones = document.querySelectorAll('.btn-filtro-cal');
+    botones.forEach(btn => {
+        if(btn.setAttribute('onclick').includes(`'${categoria}'`)) {
+            btn.style.background = "#2c3e50";
+            btn.style.color = "white";
+        } else {
+            btn.style.background = "#f1f5f9";
+            btn.style.color = "#475569";
+        }
+    });
+}
+
+// Inicializar el calendario de manera automática al cargar el sitio por primera vez
+document.addEventListener("DOMContentLoaded", function() {
+    renderizarCalendario('todos');
+});
 </script>     
     </main>
 
