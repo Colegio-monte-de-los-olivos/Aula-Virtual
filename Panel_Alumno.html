@@ -286,7 +286,7 @@
                 
 <section style="margin-top: 20px;">
     <!-- 1. MISIÓN -->
-    <details  style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 15px;">
+    <details id="details-Mision" style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 15px;">
         <summary style="font-size: 1.2em; font-weight: bold; color: #2c3e50; cursor: pointer; outline: none;">🎯 Misión</summary>
         <p id="texto-Mision" style="margin-top: 15px; color: #444; line-height: 1.6; padding-left: 5px; min-height: 40px; font-family: 'Courier New', Courier, monospace;"></p>
     </details>
@@ -467,8 +467,8 @@
         let HistoriaEscrita = false;
         let SignificadoEscrito = false;
 
-        
-        document.getElementById('texto-Mision').closest('details').addEventListener('toggle', function() {
+        const detailsMision = document.getElementById('details-Mision');
+        detailsMision.addEventListener('toggle', function() {
             if (this.open && !MisionEscrita) {
                 MisionEscrita = true;
                 efectoMaquinaEscribir(textoMisionReal, 'texto-Mision', 0);
