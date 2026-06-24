@@ -211,7 +211,7 @@
 
     <main>
       
-      <section style="margin-top: 30px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+     <section style="margin-top: 30px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
     
     <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 20px;">
         <h2 style="color: #2c3e50; margin: 0; font-size: 1.5em; display: flex; align-items: center; gap: 10px;">
@@ -227,8 +227,30 @@
         <button id="btn-cal-eventos" onclick="filtrarMiCalendario('eventos')" style="background: #f1f5f9; color: #475569; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: all 0.3s;">🏛️ Eventos y Fechas Clave</button>
     </div>
 
-    <div id="contenedor-fechas-olivos" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; min-height: 100px;">
-        </div>
+    <div id="bloque-desplegables-calendario" style="display: flex; flex-direction: column; gap: 15px;">
+        
+        <details id="desplegable-vacaciones" style="background: #fffbeb; border: 1px solid #fde68a; padding: 15px; border-radius: 8px;">
+            <summary style="font-size: 1.1em; font-weight: bold; color: #b45309; cursor: pointer; outline: none; display: flex; align-items: center; gap: 8px;">
+                🏖️ Lista de Descansos y Vacaciones (<span id="cuenta-vacaciones">0</span>)
+            </summary>
+            <div id="lista-vacaciones" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 15px;"></div>
+        </details>
+
+        <details id="desplegable-calificaciones" style="background: #fef2f2; border: 1px solid #fca5a5; padding: 15px; border-radius: 8px;">
+            <summary style="font-size: 1.1em; font-weight: bold; color: #b91c1c; cursor: pointer; outline: none; display: flex; align-items: center; gap: 8px;">
+                📝 Periodos de Calificaciones (<span id="cuenta-calificaciones">0</span>)
+            </summary>
+            <div id="lista-calificaciones" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 15px;"></div>
+        </details>
+
+        <details id="desplegable-eventos" style="background: #eff6ff; border: 1px solid #93c5fd; padding: 15px; border-radius: 8px;">
+            <summary style="font-size: 1.1em; font-weight: bold; color: #1d4ed8; cursor: pointer; outline: none; display: flex; align-items: center; gap: 8px;">
+                🏛️ Eventos Especiales y Clausuras (<span id="cuenta-eventos">0</span>)
+            </summary>
+            <div id="lista-eventos" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 15px;"></div>
+        </details>
+
+    </div>
 </section>
 
 <style>
@@ -238,20 +260,19 @@
         100% { transform: translateY(0px) rotate(0deg); }
     }
     .tarjeta-evento-olivos {
-        background: #f8fafc;
+        background: white;
         border-left: 5px solid #2c3e50;
         padding: 15px;
         border-radius: 0 8px 8px 0;
-        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+        transition: transform 0.2s;
     }
     .tarjeta-evento-olivos:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        transform: translateY(-2px);
     }
 </style>
 
 <script>
-    // Base de datos de fechas importantes del Colegio Monte de los Olivos
     const listaEventosOlivos = [
         { fecha: "2025-09-01", titulo: "Inicio del Ciclo Escolar", cat: "eventos", icono: "🚀", desc: "Apertura oficial de cursos del periodo escolar." },
         { fecha: "2025-10-24", titulo: "Evaluación del Primer Parcial", cat: "calificaciones", icono: "📝", desc: "Límite para captura de calificaciones en el sistema." },
@@ -278,46 +299,79 @@
         eventos: "#3b82f6"
     };
 
-    function dibujarEventosCalendario(filtro = "todos") {
-        const contenedor = document.getElementById('contenedor-fechas-olivos');
-        if (!contenedor) return;
+    function organizarYMostrarCalendario(filtroGlobal = "todos") {
+        const contenedores = {
+            vacaciones: document.getElementById('lista-vacaciones'),
+            calificaciones: document.getElementById('lista-calificaciones'),
+            eventos: document.getElementById('lista-eventos')
+        };
         
-        contenedor.innerHTML = "";
+        // Limpiar bloques anteriores
+        Object.values(contenedores).forEach(el => { if(el) el.innerHTML = ""; });
 
-        // Filtrar
-        const filtrados = listaEventosOlivos.filter(ev => filtro === "todos" || ev.cat === filtro);
+        // Contadores en tiempo real
+        let contadores = { vacaciones: 0, calificaciones: 0, eventos: 0 };
 
-        // Ordenar por fecha cronológica
-        filtrados.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+        // Ordenar eventos cronológicamente
+        const copiaOrdenada = [...listaEventosOlivos].sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
 
-        // Renderizar tarjetas
-        filtrados.forEach(ev => {
+        copiaOrdenada.forEach(ev => {
+            // Validar si pasa el filtro de arriba
+            if (filtroGlobal !== "todos" && ev.cat !== filtroGlobal) return;
+
+            contadores[ev.cat]++;
+
             const opciones = { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' };
             const fechaBonita = new Date(ev.fecha).toLocaleDateString('es-MX', opciones);
             const colorBorde = coloresCalOlivos[ev.cat] || "#2c3e50";
 
-            const card = document.createElement('div');
-            card.className = 'tarjeta-evento-olivos';
-            card.style.borderLeftColor = colorBorde;
-            card.innerHTML = `
+            const tarjeta = document.createElement('div');
+            tarjeta.className = 'tarjeta-evento-olivos';
+            tarjeta.style.borderLeftColor = colorBorde;
+            tarjeta.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                    <span style="font-size: 0.82rem; font-weight: bold; color: ${colorBorde}; text-transform: uppercase;">
-                        ${ev.cat === 'vacaciones' ? '🏖️ Descanso' : ev.cat === 'calificaciones' ? '📝 Calificación' : '🏛️ Evento'}
+                    <span style="font-size: 0.78rem; font-weight: bold; color: ${colorBorde}; text-transform: uppercase;">
+                        ${ev.cat === 'vacaciones' ? '🏖️ Receso' : ev.cat === 'calificaciones' ? '📝 Sistema' : '🏛️ Actividad'}
                     </span>
-                    <span style="font-size: 1.2rem;">${ev.icono}</span>
+                    <span style="font-size: 1.1rem;">${ev.icono}</span>
                 </div>
-                <h3 style="margin: 6px 0 4px 0; font-size: 1.05em; color: #1e293b;">${ev.titulo}</h3>
-                <p style="margin: 0 0 6px 0; font-size: 0.85rem; color: #64748b; font-weight: 500;">📅 ${fechaBonita}</p>
-                <p style="margin: 0; font-size: 0.85rem; color: #475569; line-height: 1.4;">${ev.desc}</p>
+                <h4 style="margin: 5px 0 3px 0; font-size: 1rem; color: #1e293b;">${ev.titulo}</h4>
+                <p style="margin: 0 0 5px 0; font-size: 0.82rem; color: #64748b; font-weight: 500;">📅 ${fechaBonita}</p>
+                <p style="margin: 0; font-size: 0.82rem; color: #475569; line-height: 1.4;">${ev.desc}</p>
             `;
-            contenedor.appendChild(card);
+
+            if (contenedores[ev.cat]) {
+                contenedores[ev.cat].appendChild(tarjeta);
+            }
+        });
+
+        // Actualizar números de los títulos e indicar si se esconde la sección por filtros
+        const cats = ['vacaciones', 'calificaciones', 'eventos'];
+        cats.forEach(cat => {
+            const txtCuenta = document.getElementById('cuenta-' + cat);
+            const panelAcordeon = document.getElementById('desplegable-' + cat);
+            if (txtCuenta) txtCuenta.innerText = contadores[cat];
+            
+            if (panelAcordeon) {
+                if (contadores[cat] === 0) {
+                    panelAcordeon.style.display = "none"; // Se esconde si el filtro no la usa
+                } else {
+                    panelAcordeon.style.display = "block";
+                    // Si el alumno filtra por una categoría específica, le abrimos la pestaña automáticamente
+                    if (filtroGlobal === cat) {
+                        panelAcordeon.open = true;
+                    } else if (filtroGlobal === "todos") {
+                        panelAcordeon.open = false; // Por defecto cerradas al "Ver Todo"
+                    }
+                }
+            }
         });
     }
 
     function filtrarMiCalendario(categoria) {
-        dibujarEventosCalendario(categoria);
+        organizarYMostrarCalendario(categoria);
 
-        // Cambiar colores dinámicos de los botones de filtro
+        // Cambiar colores dinámicos de los botones de filtro superior
         const categorias = ['todos', 'vacaciones', 'calificaciones', 'eventos'];
         categorias.forEach(cat => {
             const btn = document.getElementById('btn-cal-' + cat);
@@ -333,15 +387,15 @@
         });
     }
 
-    // Asegurar la carga sin importar el orden del navegador
+    // Inicializar de forma segura
     if (document.readyState === "complete" || document.readyState === "interactive") {
-        dibujarEventosCalendario('todos');
+        organizarYMostrarCalendario('todos');
     } else {
         window.addEventListener('load', function() {
-            dibujarEventosCalendario('todos');
+            organizarYMostrarCalendario('todos');
         });
     }
-</script> 
+</script>
  <section style="margin-top: 20px;">
     <details style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 15px;">
         <summary style="font-size: 1.2em; font-weight: bold; color: #2c3e50; cursor: pointer; outline: none;">🎯 Misión</summary>
