@@ -589,6 +589,116 @@
         </a>
     </div>
 </div>
+        <section style="margin-top: 30px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    
+    <div style="border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 20px;">
+        <h2 style="color: #2c3e50; margin: 0; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
+            💻 Herramientas de Microsoft Office 365
+        </h2>
+        <p style="margin: 5px 0 0 0; color: #64748b; font-size: 0.88rem;">Accede directamente a tus aplicaciones en la nube para realizar tus tareas escolares.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px;">
+        
+        <a href="https://www.microsoft365.com/launch/word" target="_blank" class="tarjeta-office-link" style="--color-office: #106ebe; text-decoration: none;">
+            <div class="tarjeta-office-card">
+                <div class="icono-office">📘</div>
+                <span class="titulo-office">Word</span>
+                <span class="desc-office">Documentos</span>
+            </div>
+        </a>
+
+        <a href="https://www.microsoft365.com/launch/excel" target="_blank" class="tarjeta-office-link" style="--color-office: #107c41; text-decoration: none;">
+            <div class="tarjeta-office-card">
+                <div class="icono-office">🟩</div>
+                <span class="titulo-office">Excel</span>
+                <span class="desc-office">Hojas de Cálculo</span>
+            </div>
+        </a>
+
+        <a href="https://www.microsoft365.com/launch/powerpoint" target="_blank" class="tarjeta-office-link" style="--color-office: #c43e1c; text-decoration: none;">
+            <div class="tarjeta-office-card">
+                <div class="icono-office">📙</div>
+                <span class="titulo-office">PowerPoint</span>
+                <span class="desc-office">Presentaciones</span>
+            </div>
+        </a>
+
+        <a href="https://www.microsoft365.com/launch/onenote" target="_blank" class="tarjeta-office-link" style="--color-office: #80397b; text-decoration: none;">
+            <div class="tarjeta-office-card">
+                <div class="icono-office">🟪</div>
+                <span class="titulo-office">OneNote</span>
+                <span class="desc-office">Bloc de Notas</span>
+            </div>
+        </a>
+
+        <a href="https://onedrive.live.com/" target="_blank" class="tarjeta-office-link" style="--color-office: #0078d4; text-decoration: none;">
+            <div class="tarjeta-office-card">
+                <div class="icono-office">☁️</div>
+                <span class="titulo-office">OneDrive</span>
+                <span class="desc-office">Mi Nube</span>
+            </div>
+        </a>
+
+        <a href="https://teams.microsoft.com/" target="_blank" class="tarjeta-office-link" style="--color-office: #6264a7; text-decoration: none;">
+            <div class="tarjeta-office-card">
+                <div class="icono-office">👥</div>
+                <span class="titulo-office">Teams</span>
+                <span class="desc-office">Colaboración</span>
+            </div>
+        </a>
+
+    </div>
+</section>
+
+<style>
+    .tarjeta-office-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 15px 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: all 0.25s ease-in-out;
+        cursor: pointer;
+    }
+    
+    .icono-office {
+        font-size: 2.2rem;
+        margin-bottom: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .titulo-office {
+        font-size: 0.95rem;
+        font-weight: bold;
+        color: #1e293b;
+        margin-bottom: 2px;
+    }
+
+    .desc-office {
+        font-size: 0.72rem;
+        color: #64748b;
+    }
+
+    /* Efectos dinámicos al pasar el cursor o presionar en celular */
+    .tarjeta-office-link:hover .tarjeta-office-card {
+        background: white;
+        transform: translateY(-5px);
+        border-color: var(--color-office);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .tarjeta-office-link:hover .icono-office {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .tarjeta-office-link:hover .titulo-office {
+        color: var(--color-office);
+    }
+</style>
         <div class="card" style="margin-top: 20px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center;">
     <h2 style="color: #2c3e50; margin-top: 0; border-bottom: 2px solid #e0f2fe; padding-bottom: 10px; text-align: left;">
         🧬 Registro de Asistencia Biométrico
