@@ -468,37 +468,37 @@
         let SignificadoEscrito = false;
 
         
-        document.getElementById('texto-mision').closest('details').addEventListener('toggle', function() {
+        document.getElementById('texto-Mision').closest('details').addEventListener('toggle', function() {
             if (this.open && !MisionEscrita) {
-                misionEscrita = true;
+                MisionEscrita = true;
                 efectoMaquinaEscribir(textoMisionReal, 'texto-mision', 0);
             }
         });
 
-        document.getElementById('texto-vision').closest('details').addEventListener('toggle', function() {
+        document.getElementById('texto-Vision').closest('details').addEventListener('toggle', function() {
             if (this.open && !VisionEscrita) {
-                visionEscrita = true;
+                VisionEscrita = true;
                 efectoMaquinaEscribir(textoVisionReal, 'texto-vision', 0);
             }
         });
 
-        document.getElementById('texto-calidad').closest('details').addEventListener('toggle', function() {
+        document.getElementById('texto-Calidad').closest('details').addEventListener('toggle', function() {
             if (this.open && !CalidadEscrita) {
-                calidadEscrita = true;
+                CalidadEscrita = true;
                 efectoMaquinaEscribir(textoCalidadReal, 'texto-calidad', 0);
             }
         });
 
-        document.getElementById('texto-historia').closest('details').addEventListener('toggle', function() {
+        document.getElementById('texto-Historia').closest('details').addEventListener('toggle', function() {
             if (this.open && !HistoriaEscrita) {
-                historiaEscrita = true;
+                HistoriaEscrita = true;
                 efectoMaquinaEscribir(textoHistoriaReal, 'texto-historia', 0);
             }
         });
 
-        document.getElementById('texto-significado').closest('details').addEventListener('toggle', function() {
+        document.getElementById('texto-Significado').closest('details').addEventListener('toggle', function() {
             if (this.open && !SignificadoEscrito) {
-                significadoEscrito = true;
+                SignificadoEscrito = true;
                 efectoMaquinaEscribir(textoSignificadoReal, 'texto-significado', 0);
             }
         });
