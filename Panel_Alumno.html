@@ -604,10 +604,14 @@ function filtrarCalendario(categoria) {
     });
 }
 
-// Inicializar el calendario de manera automática al cargar el sitio por primera vez
-document.addEventListener("DOMContentLoaded", function() {
+// Inicializar el calendario de manera automática garantizada
+if (document.readyState === "complete" || document.readyState === "interactive") {
     renderizarCalendario('todos');
-});
+} else {
+    window.addEventListener('load', function() {
+        renderizarCalendario('todos');
+    });
+}
 </script>     
     </main>
 
