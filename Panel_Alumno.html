@@ -781,9 +781,20 @@
         }
     }
 
-    function procesarAsistenciaBiometrica(coordenadasGPS) {
-        const nombreDelAlumno = "Alumno de Prueba - Monte de los Olivos"; 
-        const estatusAsistencia = "PRESENTE";
+  function procesarAsistenciaBiometrica(coordenadasGPS) {
+    // 1. Intentamos jalar el nombre real del alumno desde la memoria de la sesión
+    // Nota: Reemplaza 'nombreAlumno' o 'usuario' si tu variable de login se llama diferente
+    let nombreDelAlumno = localStorage.getItem('nombreAlumno') || 
+                          localStorage.getItem('usuario') || 
+                          localStorage.getItem('nombre') || 
+                          "Alumno No Identificado"; 
+
+    const estatusAsistencia = "PRESENTE";
+
+    // DIRECCIÓN EXACTA DE TU NUEVO FORMULARIO DE ENVÍO
+    const urlGoogleForm = "https://docs.google.com/forms/d/e/1FAIpQLScls9o8Mpeqtz9N4WfUsO_tQNER6vHBAmh89BwGFOBYxMwTDw/formResponse";
+    
+    // ... (el resto de tu código de la huella sigue exactamente igual)
 
         // DIRECCIÓN EXACTA DE TU NUEVO FORMULARIO DE ENVÍO
         const urlGoogleForm = "https://docs.google.com/forms/d/e/1FAIpQLScls9o8Mpeqtz9N4WfUsO_tQNER6vHBAmh89BwGFOBYxMwTDw/formResponse";
