@@ -661,8 +661,8 @@
     </div>
 </section>
 
-        <!-- =========================================================================
-     SISTEMA BIOMÉTRICO CON VERIFICACIÓN DE UBICACIÓN INTEGRADA (MONTE DE LOS OLIVOS)
+       <!-- =========================================================================
+     SISTEMA BIOMÉTRICO CON VERIFICACIÓN DE UBICACIÓN GPS (MONTE DE LOS OLIVOS)
      ========================================================================= -->
 
 <!-- PARTE 1: ESTRUCTURA VISUAL (HTML) -->
@@ -748,7 +748,7 @@
     }
 </style>
 
-<!-- PARTE 3: CEREBRO JAVASCRIPT CON ENLACES STATUS REALES -->
+<!-- PARTE 3: CEREBRO JAVASCRIPT CON ENLACES TOTALMENTE CONFIGURADOS -->
 <script>
     function obtenerUbicacionYProcesar() {
         const textoEstatus = document.getElementById('pantalla-estatus-huella');
@@ -763,12 +763,9 @@
                 (posicion) => {
                     const latitud = posicion.coords.latitude;
                     const longitud = posicion.coords.longitude;
+                    const coordenadasFinales = "Lat: " + latitud + ", Lon: " + longitud;
                     
-                    // Juntamos el estatus con las coordenadas en un solo texto
-                    const estatusConGPS = "PRESENTE (Lat: " + latitud + ", Lon: " + longitud + ")";
-                    
-                    // Pasamos los datos al escáner
-                    procesarAsistenciaBiometrica(estatusConGPS);
+                    procesarAsistenciaBiometrica(coordenadasFinales);
                 },
                 (error) => {
                     console.error(error);
@@ -784,11 +781,12 @@
         }
     }
 
-    function procesarAsistenciaBiometrica(estatusFinal) {
+    function procesarAsistenciaBiometrica(coordenadasGPS) {
         const nombreDelAlumno = "Alumno de Prueba - Monte de los Olivos"; 
+        const estatusAsistencia = "PRESENTE";
 
-        // TU ENLACE REAL YA COLOCADO CORRECTAMENTE EN MODO ENVÍO
-        const urlGoogleForm = "https://docs.google.com/forms/d/e/1FAIpQLSfRGKWmgv9k5IiI4j6iaHB92CbMiYSXkYw-2NpR1z20JYD8hA/formResponse";
+        // DIRECCIÓN EXACTA DE TU NUEVO FORMULARIO DE ENVÍO
+        const urlGoogleForm = "https://docs.google.com/forms/d/e/1FAIpQLScls9o8Mpeqtz9N4WfUsO_tQNER6vHBAmh89BwGFOBYxMwTDw/formResponse";
 
         const lector = document.getElementById('contenedor-lector-huella');
         const svgHuella = document.getElementById('icono-huella-digital');
@@ -806,10 +804,11 @@
         textoEstatus.innerText = "Escaneando huella dactilar...";
         subTexto.innerText = "Ubicación verificada correctamente. Procesando...";
 
-        // CONEXIÓN DIRECTA CON TUS DOS CÓDIGOS REALES
+        // INYECCIÓN DE TUS 3 CÓDIGOS NUEVOS EXTRAÍDOS
         const cajaDeDatos = new FormData();
-        cajaDeDatos.append("entry.1205424758", nombreDelAlumno); // Nombre del Alumno
-        cajaDeDatos.append("entry.1711050623", estatusFinal);    // Estatus + Coordenadas GPS integradas
+        cajaDeDatos.append("entry.1736810734", nombreDelAlumno);   // Nombre
+        cajaDeDatos.append("entry.123416478", estatusAsistencia);  // Estatus
+        cajaDeDatos.append("entry.269766590", coordenadasGPS);     // Ubicación GPS
 
         setTimeout(() => {
             fetch(urlGoogleForm, {
