@@ -897,60 +897,7 @@
         color: var(--color-office);
     }
 </style>
-        <div class="card" style="margin-top: 20px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center;">
-    <h2 style="color: #2c3e50; margin-top: 0; border-bottom: 2px solid #e0f2fe; padding-bottom: 10px; text-align: left;">
-        🧬 Registro de Asistencia Biométrico
-    </h2>
-    <p style="color: #555; font-size: 0.95em; text-align: left;">Por favor, ingresa tu nombre completo y coloca tu dedo sobre el lector de huella dactilar para registrar tu entrada:</p>
-
-    <div style="margin: 20px 0;">
-        <input type="text" id="nombreAlumnoAsistencia" placeholder="Escribe tu nombre aquí..." style="padding: 12px; width: 80%; max-width: 400px; border: 2px solid #cbd5e1; border-radius: 6px; font-size: 1em; outline: none; transition: border-color 0.2s;">
-    </div>
-
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 15px;">
-        <button onclick="registrarAsistenciaBiometrica()" class="btn-biometrico-huella" style="background: #1e293b; border: 3px solid #64748b; width: 110px; height: 110px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.4s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.3); position: relative; overflow: hidden;">
-            <!-- Icono de Huella Dactilar Circular Estilizada -->
-            <span class="icono-huella" style="font-size: 52px; color: #64748b; transition: all 0.4s ease; filter: drop-shadow(0 0 2px rgba(0,0,0,0.5)); line-height: 1;">💮</span>
-        </button>
-        <span id="texto-escaner" style="margin-top: 12px; font-weight: bold; color: #64748b; font-size: 0.8em; letter-spacing: 2px; transition: color 0.3s;">SISTEMA APAGADO</span>
-    </div>
-
-    <p id="mensajeAsistencia" style="font-weight: bold; font-size: 1em; margin: 10px 0 0 0; min-height: 24px;"></p>
-
-    <iframe name="puenteInvisible" id="puenteInvisible" style="display:none;"></iframe>
-    <form id="formularioAsistenciaOculto" action="https://docs.google.com/forms/d/e/1FAIpQLSfRGKWmgv9k5IiI4j6iaHB92CbMiYSXkYw-2NpR1z20JYD8hA/formResponse" method="POST" target="puenteInvisible" style="display: none;">
-        <input type="hidden" id="campoFormNombre" name="entry.1205424758">
-        <input type="hidden" id="campoFormEstatus" name="entry.1711050623">
-    </form>
-</div>
-
-<style>
-    /* Cuando el alumno pasa el cursor sobre el botón (Listo para escanear) */
-    .btn-biometrico-huella:hover {
-        border-color: #38bdf8 !important; /* Borde azul brillante */
-        background: #0f172a !important;   /* Fondo más oscuro */
-        box-shadow: 0 0 25px rgba(56, 189, 248, 0.6) !important; /* Brillo azul Neon exterior */
-    }
-    
-    /* El icono de la huella cambia a color azul brillante Neón al pasar el cursor */
-    .btn-biometrico-huella:hover .icono-huella {
-        color: #38bdf8 !important;
-        filter: drop-shadow(0 0 8px #38bdf8) !important; /* Brillo azul en la huella misma */
-        transform: scale(1.05);
-    }
-
-    /* Pequeño efecto cuando presionan el lector */
-    .btn-biometrico-huella:active {
-        transform: scale(0.95);
-        box-shadow: 0 0 35px rgba(56, 189, 248, 0.9) !important;
-    }
-
-    #nombreAlumnoAsistencia:focus {
-        border-color: #38bdf8;
-        box-shadow: 0 0 5px rgba(56, 189, 248, 0.3);
-    }
-</style>
-
+      
 <script>
     
     
