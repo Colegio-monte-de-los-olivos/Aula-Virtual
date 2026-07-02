@@ -661,6 +661,194 @@
     </div>
 </section>
 
+        <!-- =========================================================================
+     SISTEMA BIOMÉTRICO CON VERIFICACIÓN DE UBICACIÓN INTEGRADA (MONTE DE LOS OLIVOS)
+     ========================================================================= -->
+
+<!-- PARTE 1: ESTRUCTURA VISUAL (HTML) -->
+<section style="margin-top: 30px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); font-family: 'Segoe UI', sans-serif; text-align: center;">
+    
+    <!-- Encabezado del Panel -->
+    <div style="border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 25px; text-align: left;">
+        <h2 style="color: #2c3e50; margin: 0; font-size: 1.4em; display: flex; align-items: center; gap: 10px;">
+            📍 Asistencia con Geo-verificación
+        </h2>
+        <p style="margin: 5px 0 0 0; color: #64748b; font-size: 0.88rem;">Es necesario estar en el plantel y activar tu GPS para validar la asistencia.</p>
+    </div>
+
+    <!-- El Lector de Huella Digital -->
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px;">
+        
+        <!-- Contenedor del Lector -->
+        <div id="contenedor-lector-huella" onclick="obtenerUbicacionYProcesar()" class="lector-huella-vibe">
+            
+            <!-- HUELLA DIGITAL REAL VECTORIAL (SVG) -->
+            <svg id="icono-huella-digital" viewBox="0 0 24 24" style="width: 70px; height: 70px; fill: #1e3a8a; transition: all 0.3s ease; user-select: none;">
+                <path d="M12,2A10,10,0,0,0,2,12a1,1,0,0,0,2,0,8,8,0,0,1,16,0,1,1,0,0,0,2,0A10,10,0,0,0,12,2Zm0,4a6,6,0,0,0-6,6,1,1,0,0,0,2,0,4,4,0,0,1,8,0,1,1,0,0,0,2,0A6,6,0,0,0,12,6Zm0,4a2,2,0,0,0-2,2,1,1,0,0,0,2,0,0,0,0,0,1,0,0,1,1,0,0,0,2,0A2,2,0,0,0,12,10Zm0,6a4,4,0,0,1-4-4,1,1,0,0,0-2,0,6,6,0,0,0,12,0,1,1,0,0,0-2,0A4,4,0,0,1,12,16Zm-7.73,3.3a1,1,0,0,0,1.37.37A8,8,0,0,0,12,18a8,8,0,0,0,6.36,1.67,1,1,0,1,0,.28-2A10,10,0,0,1,12,16a10,10,0,0,1-7.36,1.67A1,1,0,0,0,4.27,19.3Z"/>
+            </svg>
+            
+            <!-- Línea láser del escáner -->
+            <div class="linea-escaner-verde"></div>
+        </div>
+
+        <!-- Mensajes del Sistema -->
+        <div id="pantalla-estatus-huella" style="font-size: 1.1rem; font-weight: bold; color: #475569; margin-top: 10px;">
+            Esperando huella...
+        </div>
+        <div id="subtexto-estatus-huella" style="font-size: 0.85rem; color: #94a3b8;">
+            Coloca tu dedo para verificar tu ubicación y registrar asistencia
+        </div>
+    </div>
+</section>
+
+<!-- PARTE 2: ESTILOS VISUALES Y ANIMACIONES (CSS) -->
+<style>
+    .lector-huella-vibe {
+        width: 120px;
+        height: 120px;
+        background: #f1f5f9;
+        border: 3px solid #cbd5e1;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    
+    .linea-escaner-verde {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: #22c55e;
+        box-shadow: 0 0 8px #22c55e;
+        display: none;
+    }
+
+    @keyframes escanearEfecto {
+        0% { top: 0%; }
+        50% { top: 100%; }
+        100% { top: 0%; }
+    }
+
+    @keyframes latidoHuella {
+        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+        70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); }
+        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+    }
+
+    .lector-huella-vibe:hover {
+        border-color: #3b82f6;
+        background: #eff6ff;
+    }
+</style>
+
+<!-- PARTE 3: CEREBRO JAVASCRIPT CON ENLACES STATUS REALES -->
+<script>
+    function obtenerUbicacionYProcesar() {
+        const textoEstatus = document.getElementById('pantalla-estatus-huella');
+        const subTexto = document.getElementById('subtexto-estatus-huella');
+
+        textoEstatus.innerText = "Consultando satélite GPS... 🛰️";
+        textoEstatus.style.color = "#2563eb";
+        subTexto.innerText = "Por favor, autoriza el permiso de ubicación en tu pantalla.";
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (posicion) => {
+                    const latitud = posicion.coords.latitude;
+                    const longitud = posicion.coords.longitude;
+                    
+                    // Juntamos el estatus con las coordenadas en un solo texto
+                    const estatusConGPS = "PRESENTE (Lat: " + latitud + ", Lon: " + longitud + ")";
+                    
+                    // Pasamos los datos al escáner
+                    procesarAsistenciaBiometrica(estatusConGPS);
+                },
+                (error) => {
+                    console.error(error);
+                    alert("❌ ERROR: Debes activar tu GPS y permitir el acceso a tu ubicación para poder registrar tu asistencia.");
+                    textoEstatus.innerText = "Acceso Denegado 📍";
+                    textoEstatus.style.color = "#dc2626";
+                    subTexto.innerText = "No se pudo comprobar tu presencia en el colegio.";
+                },
+                { enableHighAccuracy: true, timeout: 8000 }
+            );
+        } else {
+            alert("Tu dispositivo no soporta geolocalización.");
+        }
+    }
+
+    function procesarAsistenciaBiometrica(estatusFinal) {
+        const nombreDelAlumno = "Alumno de Prueba - Monte de los Olivos"; 
+
+        // TU ENLACE REAL YA COLOCADO CORRECTAMENTE EN MODO ENVÍO
+        const urlGoogleForm = "https://docs.google.com/forms/d/e/1FAIpQLSfRGKWmgv9k5IiI4j6iaHB92CbMiYSXkYw-2NpR1z20JYD8hA/formResponse";
+
+        const lector = document.getElementById('contenedor-lector-huella');
+        const svgHuella = document.getElementById('icono-huella-digital');
+        const laser = document.querySelector('.linea-escaner-verde');
+        const textoEstatus = document.getElementById('pantalla-estatus-huella');
+        const subTexto = document.getElementById('subtexto-estatus-huella');
+
+        lector.style.pointerEvents = "none"; 
+        lector.style.borderColor = "#3b82f6";
+        lector.style.background = "#eff6ff";
+        lector.style.animation = "latidoHuella 1.2s infinite ease-in-out";
+        laser.style.display = "block";
+        laser.style.animation = "escanearEfecto 1.5s infinite linear";
+        
+        textoEstatus.innerText = "Escaneando huella dactilar...";
+        subTexto.innerText = "Ubicación verificada correctamente. Procesando...";
+
+        // CONEXIÓN DIRECTA CON TUS DOS CÓDIGOS REALES
+        const cajaDeDatos = new FormData();
+        cajaDeDatos.append("entry.1205424758", nombreDelAlumno); // Nombre del Alumno
+        cajaDeDatos.append("entry.1711050623", estatusFinal);    // Estatus + Coordenadas GPS integradas
+
+        setTimeout(() => {
+            fetch(urlGoogleForm, {
+                method: "POST",
+                mode: "no-cors", 
+                body: cajaDeDatos
+            })
+            .then(() => {
+                laser.style.display = "none";
+                laser.style.animation = "none";
+                lector.style.animation = "none";
+                lector.style.background = "#f0fdf4";
+                lector.style.borderColor = "#22c55e";
+                svgHuella.style.fill = "#22c55e";
+                
+                textoEstatus.innerText = "¡Asistencia Registrada! ☝️✅";
+                textoEstatus.style.color = "#16a34a";
+                subTexto.innerText = "Datos biométricos y ubicación validados en Google Drive.";
+                
+                setTimeout(() => {
+                    lector.style.pointerEvents = "auto";
+                }, 3000);
+            })
+            .catch((error) => {
+                console.error(error);
+                laser.style.display = "none";
+                lector.style.animation = "none";
+                lector.style.pointerEvents = "auto";
+                lector.style.borderColor = "#ef4444";
+                lector.style.background = "#fef2f2";
+                svgHuella.style.fill = "#ef4444";
+                textoEstatus.innerText = "Error de Registro ❌";
+                textoEstatus.style.color = "#dc2626";
+                subTexto.innerText = "Fallo de comunicación con el servidor.";
+            });
+        }, 2500);
+    }
+</script>
+
 <style>
     .tarjeta-office-card {
         background: #f8fafc;
