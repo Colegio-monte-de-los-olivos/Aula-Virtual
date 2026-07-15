@@ -972,19 +972,6 @@ if (document.readyState === "complete" || document.readyState === "interactive")
 </script>     
     </main>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Buscamos cómo se guardó el usuario en la sesión al hacer login
-        let nombreReal = localStorage.getItem('usuarioLogueado') || 
-                         localStorage.getItem('nombreUsuario') || 
-                         localStorage.getItem('nombre') || 
-                         localStorage.getItem('usuario') || 
-                         "Estudiante";
-
-        // Reemplazamos el texto de la pantalla con el nombre real
-        document.getElementById('nombre-alumno-pantalla').innerText = nombreReal;
-    });
-</script>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Leemos exactamente la misma tarjeta que dejó el Login en el cajón de memoria
