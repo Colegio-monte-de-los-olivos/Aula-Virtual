@@ -971,17 +971,16 @@ if (document.readyState === "complete" || document.readyState === "interactive")
 }
 </script>     
     </main>
+<script>
+function procesarAsistenciaBiometrica(coordenadasGPS) {
+    // Busca primero la tarjeta exacta que guardó nuestro index.html
+    let nombreDelAlumno = localStorage.getItem('usuarioLogueado') || 
+                          localStorage.getItem('alumno_usuario') || 
+                          "Alumno Autenticado";
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Leemos exactamente la misma tarjeta que dejó el Login en el cajón de memoria
-        let nombreReal = localStorage.getItem('usuarioLogueado') || "Estudiante";
-        
-        // Lo pintamos en la pantalla azul
-        document.getElementById('nombre-alumno-pantalla').innerText = nombreReal;
-    });
-</script>
-
+    const estatusAsistencia = "PRESENTE";
+    // ... (el resto del envío con FormData sigue igual)
+    </script>
 </body>
 <style>html{
  color:darkviolet;
