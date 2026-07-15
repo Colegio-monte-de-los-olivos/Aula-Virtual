@@ -204,10 +204,10 @@
 </head>
 <body>
 
-    <header>
-        <h1>Aula Virtual del Alumno</h1>
-        <p>Bienvenido a tu espacio de estudio</p>
-    </header>
+   <header>
+    <h1>Aula Virtual del Alumno</h1>
+    <p id="saludo-alumno">Cargando sesión del estudiante...</p>
+</header>
 
     <main>
       
@@ -970,6 +970,22 @@ if (document.readyState === "complete" || document.readyState === "interactive")
 }
 </script>     
     </main>
+
+<script>
+    // Este código se ejecuta en cuanto se abre el panel
+    document.addEventListener("DOMContentLoaded", function() {
+        const elementoSaludo = document.getElementById('saludo-alumno');
+        
+        // Buscamos cómo guardó el Login el nombre en la memoria del dispositivo
+        let nombreGuardado = localStorage.getItem('nombreAlumno') || 
+                             localStorage.getItem('usuario') || 
+                             localStorage.getItem('nombre') || 
+                             "Estudiante";
+
+        // Si el login guardó un correo o texto largo, lo limpiamos o usamos directo
+        elementoSaludo.innerHTML = "<strong>Bienvenido, " + nombreGuardado + "</strong>";
+    });
+</script>
 
 </body>
 <style>html{
