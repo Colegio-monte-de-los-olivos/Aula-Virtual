@@ -772,13 +772,32 @@
         }
     }
 
-    function procesarAsistenciaBiometrica(coordenadasGPS) {
-        // DETECTOR INTELIGENTE DEL NOMBRE DEL ALUMNO
-        // El sistema buscará en la memoria del navegador usando las claves más comunes.
-        let nombreDelAlumno = localStorage.getItem('nombreAlumno') || 
-                              localStorage.getItem('usuario') || 
-                              localStorage.getItem('nombre') || 
-                              "Alumno Autenticado"; 
+   function procesarAsistenciaBiometrica(coordenadasGPS) {
+    // --- BUSCADOR EN PANTALLA ---
+    let nombreDelAlumno = "";
+
+    // Busca cualquier texto en la pantalla que diga "Bienvenido" u "Hola"
+    const elementosTexto = document.querySelectorAll('h1, h2, h3, p, span, div');
+    for (let el of elementosTexto) {
+        let texto = el.innerText.trim();
+        if (texto.toLowerCase().includes("bienvenido") || texto.toLowerCase().includes("hola")) {
+            nombreDelAlumno = texto
+                .replace(/bienvenido/i, "")
+                .replace(/bienvenida/i, "")
+                .replace(/hola/i, "")
+                .replace(/[,:!]/g, "")
+                .trim();
+            break;
+        }
+    }
+
+    // Si no encontró un saludo, usa el plan de respaldo con la memoria
+    if (!nombreDelAlumno) {
+        nombreDelAlumno = localStorage.getItem('nombreAlumno') || 
+                          localStorage.getItem('usuario') || 
+                          localStorage.getItem('nombre') || 
+                          "Alumno Autenticado";
+    }
 
         const estatusAsistencia = "PRESENTE";
 
