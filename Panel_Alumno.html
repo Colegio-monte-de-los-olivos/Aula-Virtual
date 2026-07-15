@@ -972,15 +972,13 @@ if (document.readyState === "complete" || document.readyState === "interactive")
 </script>     
     </main>
 <script>
-function procesarAsistenciaBiometrica(coordenadasGPS) {
-    // Busca primero la tarjeta exacta que guardó nuestro index.html
-    let nombreDelAlumno = localStorage.getItem('usuarioLogueado') || 
-                          localStorage.getItem('alumno_usuario') || 
-                          "Alumno Autenticado";
-
-    const estatusAsistencia = "PRESENTE";
-    // ... (el resto del envío con FormData sigue igual)
-    </script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Lee el nombre que guardó el index.html
+        let nombreReal = localStorage.getItem('usuarioLogueado') || "Estudiante";
+        // Lo pinta en la pantalla
+        document.getElementById('nombre-alumno-pantalla').innerText = nombreReal;
+    });
+</script>
 </body>
 <style>html{
  color:darkviolet;
