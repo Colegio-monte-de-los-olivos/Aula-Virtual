@@ -294,15 +294,21 @@
                 return;
             }
 
-          if (usuarioIngresado === usuarioRegistrado && passwordIngresada === passwordRegistrada) {
+       // --- VALIDACIÓN DE CREDENCIALES ---
+        if (usuarioIngresado === usuarioRegistrado && passwordIngresada === passwordRegistrada) {
+            
+            // 1. Guardamos de forma segura el nombre en la memoria del navegador
+            localStorage.setItem('usuarioLogueado', usuarioRegistrado);
+            
+            // 2. Avisamos al usuario que todo está correcto
             alert("¡Felicidades! Credenciales correctas.\nHas ingresado con éxito al Portal Escolar.");
-    
+
+            // 3. Redireccionamos limpiamente al panel
             window.location.href = "Panel_Alumno.html";
-        
-                
-            } else {
-                alert("Acceso denegado: El usuario o la contraseña no coinciden. Inténtalo nuevamente.");
-            }
+            
+        } else {
+            alert("Acceso denegado: El usuario o la contraseña no coinciden. Inténtalo nuevamente.");
+        }
         });
     </script>
     <script>
