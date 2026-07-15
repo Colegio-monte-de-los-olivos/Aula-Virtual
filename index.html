@@ -294,11 +294,16 @@
                 return;
             }
 
-            if (usuarioIngresado === usuarioRegistrado && passwordIngresada === passwordRegistrada) {
-                alert("¡Felicidades! Credenciales correctas.\nHas ingresado con éxito al Portal Escolar.");
-                
-                // Redirecciona al alumno a la página del aula virtual
-                window.location.href = "Panel_Alumno.html"; 
+          if (usuarioIngresado === usuarioRegistrado && passwordIngresada === passwordRegistrada) {
+            alert("¡Felicidades! Credenciales correctas.\nHas ingresado con éxito al Portal Escolar.");
+            
+            // 👇 ESTA ES LA LÍNEA CLAVE QUE DEBES AGREGAR:
+            // Guarda el nombre real en una tarjeta limpia para que la otra página la lea
+            localStorage.setItem('usuarioLogueado', usuarioRegistrado);
+
+            // Redirecciona al alumno a la página del aula virtual
+            window.location.href = "Panel_Alumno.html";
+        }
                 
             } else {
                 alert("Acceso denegado: El usuario o la contraseña no coinciden. Inténtalo nuevamente.");
