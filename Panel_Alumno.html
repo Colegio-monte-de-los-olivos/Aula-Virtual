@@ -204,9 +204,9 @@
 </head>
 <body>
 
- <header>
+<header>
     <h1>Aula Virtual del Alumno</h1>
-    <p>Bienvenido, <span id="nombre-alumno-pantalla">Estudiante</span></p>
+    <p>Bienvenido, <span id="nombre-alumno-pantalla" style="font-weight: bold;">Estudiante</span></p>
 </header>
     
 
@@ -982,6 +982,15 @@ if (document.readyState === "complete" || document.readyState === "interactive")
                          "Estudiante";
 
         // Reemplazamos el texto de la pantalla con el nombre real
+        document.getElementById('nombre-alumno-pantalla').innerText = nombreReal;
+    });
+</script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Leemos exactamente la misma tarjeta que dejó el Login en el cajón de memoria
+        let nombreReal = localStorage.getItem('usuarioLogueado') || "Estudiante";
+        
+        // Lo pintamos en la pantalla azul
         document.getElementById('nombre-alumno-pantalla').innerText = nombreReal;
     });
 </script>
