@@ -296,6 +296,18 @@
 
             if (usuarioIngresado === usuarioRegistrado && passwordIngresada === passwordRegistrada) {
                 alert("¡Felicidades! Credenciales correctas.\nHas ingresado con éxito al Portal Escolar.");
+
+                // ... (Aquí está tu código actual donde revisas que el usuario y contraseña estén bien)
+
+if (usuarioCorrecto) {
+    // 1. OBLIGAMOS A GUARDAR EL NOMBRE EN LA MEMORIA ANTES DE SALIR
+    // (Reemplaza 'txtUsuario' por la cajita o variable donde se escribe el nombre en tu Login)
+    let nombreParaGuardar = document.getElementById('txtUsuario').value; 
+    localStorage.setItem('usuarioLogueado', nombreParaGuardar);
+
+    // 2. Aquí está tu línea de siempre que los manda al panel:
+    window.location.href = "Panel_Alumno.html";
+}
                 
                 // Redirecciona al alumno a la página del aula virtual
                 window.location.href = "Panel_Alumno.html"; 
