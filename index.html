@@ -296,12 +296,6 @@
 
             if (usuarioIngresado === usuarioRegistrado && passwordIngresada === passwordRegistrada) {
                 alert("¡Felicidades! Credenciales correctas.\nHas ingresado con éxito al Portal Escolar.");
-
-                // ... (Aquí está tu código actual donde revisas que el usuario y contraseña estén bien)
-
-if (usuarioCorrecto) {
-    let nombreParaGuardar = document.getElementById('txtUsuario').value; 
-    localStorage.setItem('usuarioLogueado', nombreParaGuardar);
                 
                 // Redirecciona al alumno a la página del aula virtual
                 window.location.href = "Panel_Alumno.html"; 
