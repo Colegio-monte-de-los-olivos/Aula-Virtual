@@ -209,6 +209,13 @@
                 </form>
             </div>
 
+            <!-- Botón o enlace para restablecer contraseña -->
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="#" onclick="restablecerAcceso()" style="color: #2563eb; font-size: 0.85rem; text-decoration: none; font-family: 'Segoe UI', sans-serif;">
+                    ¿Olvidaste tu contraseña? Restablecer cuenta
+                </a>
+            </div>
+
             <div id="registro-section" class="form-section">
                 <form id="form-registro">
                     <div class="form-group">
@@ -232,6 +239,21 @@
     </footer>
 
     <script>
+
+        function restablecerAcceso() {
+    let confirmar = confirm("¿Deseas restablecer tus datos en este dispositivo para registrarte de nuevo?");
+    if (confirmar) {
+        // Borramos el almacenamiento local del navegador
+        localStorage.removeItem('alumno_usuario');
+        localStorage.removeItem('alumno_password');
+        localStorage.removeItem('usuarioLogueado');
+        
+        alert("✅ Datos borrados con éxito. Ahora puedes registrarte nuevamente.");
+        
+        // Te devuelve automáticamente a la pestaña de registro que se ve en tu imagen
+        cambiarPestaña('reg-section', 'btn-tab-reg');
+    }
+}
         // 1. Control de las Pestañas (Cambiar de Vista)
         function cambiarPestana(seccionId, botonId) {
             document.querySelectorAll('.form-section').forEach(sec => sec.classList.remove('active'));
