@@ -243,16 +243,30 @@
         function restablecerAcceso() {
     let confirmar = confirm("¿Deseas restablecer tus datos en este dispositivo para registrarte de nuevo?");
     if (confirmar) {
-        // Borramos el almacenamiento local del navegador
+        // Borramos todas las llaves posibles del localStorage
         localStorage.removeItem('alumno_usuario');
         localStorage.removeItem('alumno_password');
         localStorage.removeItem('usuarioLogueado');
+        localStorage.removeItem('usuarioRegistrado'); // Por si acaso usabas esta
+        localStorage.removeItem('passwordRegistrada'); // Por si acaso usabas esta
         
-        alert("✅ Datos borrados con éxito. Ahora puedes registrarte nuevamente.");
+        alert("✅ Datos borrados con éxito. Ahora regístrate de nuevo.");
         
-        // Te devuelve automáticamente a la pestaña de registro que se ve en tu imagen
-        cambiarPestaña('reg-section', 'btn-tab-reg');
+        // Recargamos la página para limpiar formularios en pantalla
+        window.location.reload();
     }
+}
+        const usuarioIngresado = document.getElementById('login-usuario').value.trim().toLowerCase();
+const passwordIngresada = document.getElementById('login-password').value.trim();
+
+const usuarioRegistrado = localStorage.getItem('alumno_usuario');
+const passwordRegistrada = localStorage.getItem('alumno_password');
+
+if (usuarioIngresado === usuarioRegistrado && passwordIngresada === passwordRegistrada) {
+    localStorage.setItem('usuarioLogueado', usuarioRegistrado);
+    window.location.href = "Panel_Alumno.html";
+} else {
+    alert("Acceso denegado: El usuario o la contraseña no coinciden.");
 }
         // 1. Control de las Pestañas (Cambiar de Vista)
         function cambiarPestana(seccionId, botonId) {
